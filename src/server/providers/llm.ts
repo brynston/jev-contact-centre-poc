@@ -30,7 +30,6 @@ export async function runLlm(interaction: ContactCentreInteraction): Promise<Pro
     headers: { 'Authorization': `Bearer ${key}`, 'Content-Type': 'application/json' },
     body: JSON.stringify({
       model,
-      temperature: 0,
       messages: [
         { role: 'system', content: 'You are a contact-centre decision classifier. ' + schemaPrompt },
         { role: 'user', content: JSON.stringify(interaction) }
