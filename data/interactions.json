@@ -1,0 +1,2202 @@
+[
+  {
+    "id": "CC-001",
+    "channel": "chat",
+    "subject": "Unexpected charge",
+    "message": "I have a $39 charge on my statement that I was not expecting. Can you explain what it is?",
+    "metadata": {
+      "customerTenureMonths": 2,
+      "plan": "basic",
+      "monthlySpendAud": 25,
+      "priorContacts30d": 0,
+      "accountAgeDays": 60,
+      "region": "AU"
+    },
+    "groundTruth": {
+      "route": "billing",
+      "urgency": "medium",
+      "churnRisk": "low",
+      "fraudRisk": "low",
+      "humanEscalation": false,
+      "customerValue": "low"
+    }
+  },
+  {
+    "id": "CC-002",
+    "channel": "email",
+    "subject": "Invoice amount looks wrong",
+    "message": "My latest invoice is $28 higher than usual and I cannot see why. Please check the breakdown.",
+    "metadata": {
+      "customerTenureMonths": 16,
+      "plan": "basic",
+      "monthlySpendAud": 38,
+      "priorContacts30d": 0,
+      "accountAgeDays": 497,
+      "region": "NZ"
+    },
+    "groundTruth": {
+      "route": "billing",
+      "urgency": "low",
+      "churnRisk": "low",
+      "fraudRisk": "low",
+      "humanEscalation": false,
+      "customerValue": "low"
+    }
+  },
+  {
+    "id": "CC-003",
+    "channel": "call_transcript",
+    "subject": "Charged after plan change",
+    "message": "I downgraded last week but today I was billed at the old premium rate. Can this be corrected?",
+    "metadata": {
+      "customerTenureMonths": 30,
+      "plan": "basic",
+      "monthlySpendAud": 51,
+      "priorContacts30d": 0,
+      "accountAgeDays": 905,
+      "region": "SG"
+    },
+    "groundTruth": {
+      "route": "billing",
+      "urgency": "low",
+      "churnRisk": "low",
+      "fraudRisk": "low",
+      "humanEscalation": true,
+      "customerValue": "medium"
+    }
+  },
+  {
+    "id": "CC-004",
+    "channel": "chat",
+    "subject": "Direct debit failed",
+    "message": "My direct debit bounced even though there was enough money in the account. I need to know if I will be charged a fee.",
+    "metadata": {
+      "customerTenureMonths": 44,
+      "plan": "basic",
+      "monthlySpendAud": 64,
+      "priorContacts30d": 0,
+      "accountAgeDays": 1342,
+      "region": "AU"
+    },
+    "groundTruth": {
+      "route": "billing",
+      "urgency": "low",
+      "churnRisk": "low",
+      "fraudRisk": "low",
+      "humanEscalation": false,
+      "customerValue": "medium"
+    }
+  },
+  {
+    "id": "CC-005",
+    "channel": "email",
+    "subject": "GST invoice query",
+    "message": "Could you send me a tax invoice showing GST for the last three months?",
+    "metadata": {
+      "customerTenureMonths": 58,
+      "plan": "basic",
+      "monthlySpendAud": 77,
+      "priorContacts30d": 0,
+      "accountAgeDays": 1750,
+      "region": "NZ"
+    },
+    "groundTruth": {
+      "route": "billing",
+      "urgency": "medium",
+      "churnRisk": "low",
+      "fraudRisk": "low",
+      "humanEscalation": false,
+      "customerValue": "medium"
+    }
+  },
+  {
+    "id": "CC-006",
+    "channel": "call_transcript",
+    "subject": "Payment showing twice",
+    "message": "There are two identical $79 subscription charges dated yesterday. I only have one account.",
+    "metadata": {
+      "customerTenureMonths": 72,
+      "plan": "basic",
+      "monthlySpendAud": 90,
+      "priorContacts30d": 0,
+      "accountAgeDays": 2187,
+      "region": "SG"
+    },
+    "groundTruth": {
+      "route": "billing",
+      "urgency": "low",
+      "churnRisk": "low",
+      "fraudRisk": "low",
+      "humanEscalation": true,
+      "customerValue": "high"
+    }
+  },
+  {
+    "id": "CC-007",
+    "channel": "chat",
+    "subject": "Annual fee confusion",
+    "message": "Why has an annual service fee appeared? I thought it was included in my plan.",
+    "metadata": {
+      "customerTenureMonths": 2,
+      "plan": "basic",
+      "monthlySpendAud": 103,
+      "priorContacts30d": 0,
+      "accountAgeDays": 75,
+      "region": "AU"
+    },
+    "groundTruth": {
+      "route": "billing",
+      "urgency": "low",
+      "churnRisk": "low",
+      "fraudRisk": "low",
+      "humanEscalation": false,
+      "customerValue": "medium"
+    }
+  },
+  {
+    "id": "CC-008",
+    "channel": "email",
+    "subject": "Billing date request",
+    "message": "Can I move my billing date from the 3rd to the 15th each month?",
+    "metadata": {
+      "customerTenureMonths": 16,
+      "plan": "basic",
+      "monthlySpendAud": 26,
+      "priorContacts30d": 0,
+      "accountAgeDays": 483,
+      "region": "NZ"
+    },
+    "groundTruth": {
+      "route": "billing",
+      "urgency": "low",
+      "churnRisk": "low",
+      "fraudRisk": "low",
+      "humanEscalation": false,
+      "customerValue": "low"
+    }
+  },
+  {
+    "id": "CC-009",
+    "channel": "call_transcript",
+    "subject": "Card payment declined",
+    "message": "I have tried two cards and both are being declined, but the cards work elsewhere. What is going on?",
+    "metadata": {
+      "customerTenureMonths": 30,
+      "plan": "basic",
+      "monthlySpendAud": 39,
+      "priorContacts30d": 0,
+      "accountAgeDays": 920,
+      "region": "SG"
+    },
+    "groundTruth": {
+      "route": "billing",
+      "urgency": "medium",
+      "churnRisk": "low",
+      "fraudRisk": "low",
+      "humanEscalation": true,
+      "customerValue": "medium"
+    }
+  },
+  {
+    "id": "CC-010",
+    "channel": "chat",
+    "subject": "Incorrect plan charge",
+    "message": "I am on Plus but the invoice appears to charge me for Premium. Please fix the next bill.",
+    "metadata": {
+      "customerTenureMonths": 44,
+      "plan": "basic",
+      "monthlySpendAud": 52,
+      "priorContacts30d": 0,
+      "accountAgeDays": 1328,
+      "region": "AU"
+    },
+    "groundTruth": {
+      "route": "billing",
+      "urgency": "low",
+      "churnRisk": "low",
+      "fraudRisk": "low",
+      "humanEscalation": false,
+      "customerValue": "medium"
+    }
+  },
+  {
+    "id": "CC-011",
+    "channel": "email",
+    "subject": "App crashes",
+    "message": "The mobile app crashes every time I open the reports tab since this morning.",
+    "metadata": {
+      "customerTenureMonths": 28,
+      "plan": "premium",
+      "monthlySpendAud": 220,
+      "priorContacts30d": 2,
+      "accountAgeDays": 865,
+      "region": "NZ"
+    },
+    "groundTruth": {
+      "route": "technical",
+      "urgency": "medium",
+      "churnRisk": "low",
+      "fraudRisk": "low",
+      "humanEscalation": false,
+      "customerValue": "medium"
+    }
+  },
+  {
+    "id": "CC-012",
+    "channel": "call_transcript",
+    "subject": "Service outage",
+    "message": "Our whole team cannot access the service and the status page says everything is fine. This is blocking us from working.",
+    "metadata": {
+      "customerTenureMonths": 42,
+      "plan": "premium",
+      "monthlySpendAud": 233,
+      "priorContacts30d": 2,
+      "accountAgeDays": 1273,
+      "region": "SG"
+    },
+    "groundTruth": {
+      "route": "technical",
+      "urgency": "critical",
+      "churnRisk": "medium",
+      "fraudRisk": "low",
+      "humanEscalation": true,
+      "customerValue": "medium"
+    }
+  },
+  {
+    "id": "CC-013",
+    "channel": "chat",
+    "subject": "Integration stopped syncing",
+    "message": "The Salesforce integration stopped syncing overnight and 400 records are now missing from today.",
+    "metadata": {
+      "customerTenureMonths": 56,
+      "plan": "premium",
+      "monthlySpendAud": 246,
+      "priorContacts30d": 2,
+      "accountAgeDays": 1681,
+      "region": "AU"
+    },
+    "groundTruth": {
+      "route": "technical",
+      "urgency": "high",
+      "churnRisk": "low",
+      "fraudRisk": "low",
+      "humanEscalation": true,
+      "customerValue": "medium"
+    }
+  },
+  {
+    "id": "CC-014",
+    "channel": "email",
+    "subject": "Slow dashboard",
+    "message": "The dashboard is taking more than two minutes to load each page. It started after the latest release.",
+    "metadata": {
+      "customerTenureMonths": 70,
+      "plan": "premium",
+      "monthlySpendAud": 259,
+      "priorContacts30d": 2,
+      "accountAgeDays": 2118,
+      "region": "NZ"
+    },
+    "groundTruth": {
+      "route": "technical",
+      "urgency": "medium",
+      "churnRisk": "low",
+      "fraudRisk": "low",
+      "humanEscalation": false,
+      "customerValue": "high"
+    }
+  },
+  {
+    "id": "CC-015",
+    "channel": "call_transcript",
+    "subject": "Export error",
+    "message": "CSV export fails at 92% with an unknown error for every report I try.",
+    "metadata": {
+      "customerTenureMonths": 84,
+      "plan": "premium",
+      "monthlySpendAud": 182,
+      "priorContacts30d": 2,
+      "accountAgeDays": 2526,
+      "region": "SG"
+    },
+    "groundTruth": {
+      "route": "technical",
+      "urgency": "medium",
+      "churnRisk": "low",
+      "fraudRisk": "low",
+      "humanEscalation": false,
+      "customerValue": "high"
+    }
+  },
+  {
+    "id": "CC-016",
+    "channel": "chat",
+    "subject": "Mobile notifications broken",
+    "message": "Push notifications have stopped arriving on both my phone and tablet even though they are enabled.",
+    "metadata": {
+      "customerTenureMonths": 14,
+      "plan": "premium",
+      "monthlySpendAud": 195,
+      "priorContacts30d": 2,
+      "accountAgeDays": 443,
+      "region": "AU"
+    },
+    "groundTruth": {
+      "route": "technical",
+      "urgency": "medium",
+      "churnRisk": "low",
+      "fraudRisk": "low",
+      "humanEscalation": false,
+      "customerValue": "medium"
+    }
+  },
+  {
+    "id": "CC-017",
+    "channel": "email",
+    "subject": "API timeout",
+    "message": "Your API is timing out on our production requests and our checkout flow is failing. We need help urgently.",
+    "metadata": {
+      "customerTenureMonths": 28,
+      "plan": "premium",
+      "monthlySpendAud": 208,
+      "priorContacts30d": 2,
+      "accountAgeDays": 851,
+      "region": "NZ"
+    },
+    "groundTruth": {
+      "route": "technical",
+      "urgency": "critical",
+      "churnRisk": "medium",
+      "fraudRisk": "low",
+      "humanEscalation": true,
+      "customerValue": "medium"
+    }
+  },
+  {
+    "id": "CC-018",
+    "channel": "call_transcript",
+    "subject": "Login loop after update",
+    "message": "After updating the app I get sent back to the sign-in screen repeatedly even after successful MFA.",
+    "metadata": {
+      "customerTenureMonths": 42,
+      "plan": "premium",
+      "monthlySpendAud": 221,
+      "priorContacts30d": 2,
+      "accountAgeDays": 1288,
+      "region": "SG"
+    },
+    "groundTruth": {
+      "route": "technical",
+      "urgency": "high",
+      "churnRisk": "low",
+      "fraudRisk": "low",
+      "humanEscalation": true,
+      "customerValue": "medium"
+    }
+  },
+  {
+    "id": "CC-019",
+    "channel": "chat",
+    "subject": "Missing data",
+    "message": "Yesterday’s transactions are not appearing in the analytics view, although I can see them in the source system.",
+    "metadata": {
+      "customerTenureMonths": 56,
+      "plan": "premium",
+      "monthlySpendAud": 234,
+      "priorContacts30d": 2,
+      "accountAgeDays": 1696,
+      "region": "AU"
+    },
+    "groundTruth": {
+      "route": "technical",
+      "urgency": "medium",
+      "churnRisk": "low",
+      "fraudRisk": "low",
+      "humanEscalation": false,
+      "customerValue": "medium"
+    }
+  },
+  {
+    "id": "CC-020",
+    "channel": "email",
+    "subject": "Feature not loading",
+    "message": "The pricing calculator panel stays blank in Chrome but loads in Safari.",
+    "metadata": {
+      "customerTenureMonths": 70,
+      "plan": "premium",
+      "monthlySpendAud": 247,
+      "priorContacts30d": 2,
+      "accountAgeDays": 2104,
+      "region": "NZ"
+    },
+    "groundTruth": {
+      "route": "technical",
+      "urgency": "medium",
+      "churnRisk": "low",
+      "fraudRisk": "low",
+      "humanEscalation": false,
+      "customerValue": "high"
+    }
+  },
+  {
+    "id": "CC-021",
+    "channel": "call_transcript",
+    "subject": "Thinking of leaving",
+    "message": "I have been comparing alternatives and your service is getting hard to justify. Is there a cheaper option before I move?",
+    "metadata": {
+      "customerTenureMonths": 54,
+      "plan": "basic",
+      "monthlySpendAud": 105,
+      "priorContacts30d": 4,
+      "accountAgeDays": 1641,
+      "region": "SG"
+    },
+    "groundTruth": {
+      "route": "retention",
+      "urgency": "medium",
+      "churnRisk": "medium",
+      "fraudRisk": "low",
+      "humanEscalation": false,
+      "customerValue": "medium"
+    }
+  },
+  {
+    "id": "CC-022",
+    "channel": "chat",
+    "subject": "Cancel my account",
+    "message": "Please cancel my subscription at the end of this billing period. I no longer want the service.",
+    "metadata": {
+      "customerTenureMonths": 68,
+      "plan": "basic",
+      "monthlySpendAud": 28,
+      "priorContacts30d": 4,
+      "accountAgeDays": 2049,
+      "region": "AU"
+    },
+    "groundTruth": {
+      "route": "retention",
+      "urgency": "high",
+      "churnRisk": "high",
+      "fraudRisk": "low",
+      "humanEscalation": true,
+      "customerValue": "high"
+    }
+  },
+  {
+    "id": "CC-023",
+    "channel": "email",
+    "subject": "Competitor is cheaper",
+    "message": "A competitor has offered the same features for 30% less. Can you match it?",
+    "metadata": {
+      "customerTenureMonths": 82,
+      "plan": "basic",
+      "monthlySpendAud": 41,
+      "priorContacts30d": 4,
+      "accountAgeDays": 2486,
+      "region": "NZ"
+    },
+    "groundTruth": {
+      "route": "retention",
+      "urgency": "medium",
+      "churnRisk": "medium",
+      "fraudRisk": "low",
+      "humanEscalation": false,
+      "customerValue": "high"
+    }
+  },
+  {
+    "id": "CC-024",
+    "channel": "call_transcript",
+    "subject": "Need a better plan",
+    "message": "Our usage has dropped and the current plan is too large. What can you do to keep us?",
+    "metadata": {
+      "customerTenureMonths": 12,
+      "plan": "basic",
+      "monthlySpendAud": 54,
+      "priorContacts30d": 4,
+      "accountAgeDays": 374,
+      "region": "SG"
+    },
+    "groundTruth": {
+      "route": "retention",
+      "urgency": "medium",
+      "churnRisk": "medium",
+      "fraudRisk": "low",
+      "humanEscalation": false,
+      "customerValue": "low"
+    }
+  },
+  {
+    "id": "CC-025",
+    "channel": "chat",
+    "subject": "Close service",
+    "message": "I want to close the account completely and stop any further charges.",
+    "metadata": {
+      "customerTenureMonths": 26,
+      "plan": "basic",
+      "monthlySpendAud": 67,
+      "priorContacts30d": 4,
+      "accountAgeDays": 782,
+      "region": "AU"
+    },
+    "groundTruth": {
+      "route": "retention",
+      "urgency": "high",
+      "churnRisk": "high",
+      "fraudRisk": "low",
+      "humanEscalation": true,
+      "customerValue": "medium"
+    }
+  },
+  {
+    "id": "CC-026",
+    "channel": "email",
+    "subject": "Too expensive now",
+    "message": "The price increase is the final straw. Unless there is a meaningful discount I am leaving.",
+    "metadata": {
+      "customerTenureMonths": 40,
+      "plan": "basic",
+      "monthlySpendAud": 80,
+      "priorContacts30d": 4,
+      "accountAgeDays": 1219,
+      "region": "NZ"
+    },
+    "groundTruth": {
+      "route": "retention",
+      "urgency": "medium",
+      "churnRisk": "high",
+      "fraudRisk": "low",
+      "humanEscalation": true,
+      "customerValue": "medium"
+    }
+  },
+  {
+    "id": "CC-027",
+    "channel": "call_transcript",
+    "subject": "Switching provider",
+    "message": "We have already started moving our team to another provider. I need the steps to cancel here.",
+    "metadata": {
+      "customerTenureMonths": 54,
+      "plan": "basic",
+      "monthlySpendAud": 93,
+      "priorContacts30d": 4,
+      "accountAgeDays": 1627,
+      "region": "SG"
+    },
+    "groundTruth": {
+      "route": "retention",
+      "urgency": "high",
+      "churnRisk": "high",
+      "fraudRisk": "low",
+      "humanEscalation": true,
+      "customerValue": "medium"
+    }
+  },
+  {
+    "id": "CC-028",
+    "channel": "chat",
+    "subject": "Pause or cancel",
+    "message": "Can I pause the subscription for three months? If not I will probably cancel.",
+    "metadata": {
+      "customerTenureMonths": 68,
+      "plan": "basic",
+      "monthlySpendAud": 106,
+      "priorContacts30d": 4,
+      "accountAgeDays": 2064,
+      "region": "AU"
+    },
+    "groundTruth": {
+      "route": "retention",
+      "urgency": "medium",
+      "churnRisk": "medium",
+      "fraudRisk": "low",
+      "humanEscalation": false,
+      "customerValue": "high"
+    }
+  },
+  {
+    "id": "CC-029",
+    "channel": "email",
+    "subject": "Last chance before I leave",
+    "message": "This is my third complaint in a month. If today’s issue is not fixed I am cancelling all four accounts.",
+    "metadata": {
+      "customerTenureMonths": 82,
+      "plan": "basic",
+      "monthlySpendAud": 29,
+      "priorContacts30d": 4,
+      "accountAgeDays": 2472,
+      "region": "NZ"
+    },
+    "groundTruth": {
+      "route": "retention",
+      "urgency": "high",
+      "churnRisk": "high",
+      "fraudRisk": "low",
+      "humanEscalation": true,
+      "customerValue": "high"
+    }
+  },
+  {
+    "id": "CC-030",
+    "channel": "call_transcript",
+    "subject": "Reduce subscription",
+    "message": "We need to cut costs by half. Please tell me the cheapest way to stay or I will terminate the service.",
+    "metadata": {
+      "customerTenureMonths": 12,
+      "plan": "basic",
+      "monthlySpendAud": 42,
+      "priorContacts30d": 4,
+      "accountAgeDays": 360,
+      "region": "SG"
+    },
+    "groundTruth": {
+      "route": "retention",
+      "urgency": "medium",
+      "churnRisk": "high",
+      "fraudRisk": "low",
+      "humanEscalation": true,
+      "customerValue": "low"
+    }
+  },
+  {
+    "id": "CC-031",
+    "channel": "chat",
+    "subject": "Unknown transaction",
+    "message": "There is a $640 transaction I do not recognise. I still have my card with me.",
+    "metadata": {
+      "customerTenureMonths": 80,
+      "plan": "premium",
+      "monthlySpendAud": 210,
+      "priorContacts30d": 0,
+      "accountAgeDays": 2417,
+      "region": "AU"
+    },
+    "groundTruth": {
+      "route": "fraud_security",
+      "urgency": "high",
+      "churnRisk": "low",
+      "fraudRisk": "high",
+      "humanEscalation": true,
+      "customerValue": "high"
+    }
+  },
+  {
+    "id": "CC-032",
+    "channel": "email",
+    "subject": "Account hacked",
+    "message": "Someone appears to have taken over my account. The email address and phone number were changed and I cannot get in.",
+    "metadata": {
+      "customerTenureMonths": 10,
+      "plan": "premium",
+      "monthlySpendAud": 223,
+      "priorContacts30d": 0,
+      "accountAgeDays": 305,
+      "region": "NZ"
+    },
+    "groundTruth": {
+      "route": "fraud_security",
+      "urgency": "critical",
+      "churnRisk": "low",
+      "fraudRisk": "high",
+      "humanEscalation": true,
+      "customerValue": "medium"
+    }
+  },
+  {
+    "id": "CC-033",
+    "channel": "call_transcript",
+    "subject": "Suspicious email",
+    "message": "I received an email asking me to verify my account through a strange link. Is it actually from you?",
+    "metadata": {
+      "customerTenureMonths": 24,
+      "plan": "premium",
+      "monthlySpendAud": 236,
+      "priorContacts30d": 0,
+      "accountAgeDays": 742,
+      "region": "SG"
+    },
+    "groundTruth": {
+      "route": "fraud_security",
+      "urgency": "high",
+      "churnRisk": "low",
+      "fraudRisk": "medium",
+      "humanEscalation": true,
+      "customerValue": "medium"
+    }
+  },
+  {
+    "id": "CC-034",
+    "channel": "chat",
+    "subject": "Card used overseas",
+    "message": "My account shows three purchases in Singapore today. I am in Melbourne and did not make them.",
+    "metadata": {
+      "customerTenureMonths": 38,
+      "plan": "premium",
+      "monthlySpendAud": 249,
+      "priorContacts30d": 0,
+      "accountAgeDays": 1150,
+      "region": "AU"
+    },
+    "groundTruth": {
+      "route": "fraud_security",
+      "urgency": "high",
+      "churnRisk": "low",
+      "fraudRisk": "high",
+      "humanEscalation": true,
+      "customerValue": "medium"
+    }
+  },
+  {
+    "id": "CC-035",
+    "channel": "email",
+    "subject": "MFA changed",
+    "message": "I just received a message saying MFA was changed, but I did not change it. Please lock the account now.",
+    "metadata": {
+      "customerTenureMonths": 52,
+      "plan": "premium",
+      "monthlySpendAud": 262,
+      "priorContacts30d": 0,
+      "accountAgeDays": 1587,
+      "region": "NZ"
+    },
+    "groundTruth": {
+      "route": "fraud_security",
+      "urgency": "critical",
+      "churnRisk": "low",
+      "fraudRisk": "high",
+      "humanEscalation": true,
+      "customerValue": "high"
+    }
+  },
+  {
+    "id": "CC-036",
+    "channel": "call_transcript",
+    "subject": "Possible scam",
+    "message": "A caller claiming to be your support team asked me to install remote access software. I stopped before entering my password.",
+    "metadata": {
+      "customerTenureMonths": 66,
+      "plan": "premium",
+      "monthlySpendAud": 185,
+      "priorContacts30d": 0,
+      "accountAgeDays": 1995,
+      "region": "SG"
+    },
+    "groundTruth": {
+      "route": "fraud_security",
+      "urgency": "high",
+      "churnRisk": "low",
+      "fraudRisk": "medium",
+      "humanEscalation": true,
+      "customerValue": "high"
+    }
+  },
+  {
+    "id": "CC-037",
+    "channel": "chat",
+    "subject": "New device alert",
+    "message": "I got a new device login alert from a device I have never seen. Can you check whether anyone accessed my account?",
+    "metadata": {
+      "customerTenureMonths": 80,
+      "plan": "premium",
+      "monthlySpendAud": 198,
+      "priorContacts30d": 0,
+      "accountAgeDays": 2403,
+      "region": "AU"
+    },
+    "groundTruth": {
+      "route": "fraud_security",
+      "urgency": "high",
+      "churnRisk": "low",
+      "fraudRisk": "medium",
+      "humanEscalation": true,
+      "customerValue": "high"
+    }
+  },
+  {
+    "id": "CC-038",
+    "channel": "email",
+    "subject": "Password reset I did not request",
+    "message": "There have been five password reset emails in the last hour and none were initiated by me.",
+    "metadata": {
+      "customerTenureMonths": 10,
+      "plan": "premium",
+      "monthlySpendAud": 211,
+      "priorContacts30d": 0,
+      "accountAgeDays": 320,
+      "region": "NZ"
+    },
+    "groundTruth": {
+      "route": "fraud_security",
+      "urgency": "high",
+      "churnRisk": "low",
+      "fraudRisk": "high",
+      "humanEscalation": true,
+      "customerValue": "medium"
+    }
+  },
+  {
+    "id": "CC-039",
+    "channel": "call_transcript",
+    "subject": "Unauthorised transfer",
+    "message": "A transfer of $2,400 left the account ten minutes ago and I did not authorise it. Please stop anything else immediately.",
+    "metadata": {
+      "customerTenureMonths": 24,
+      "plan": "premium",
+      "monthlySpendAud": 224,
+      "priorContacts30d": 0,
+      "accountAgeDays": 728,
+      "region": "SG"
+    },
+    "groundTruth": {
+      "route": "fraud_security",
+      "urgency": "critical",
+      "churnRisk": "low",
+      "fraudRisk": "high",
+      "humanEscalation": true,
+      "customerValue": "medium"
+    }
+  },
+  {
+    "id": "CC-040",
+    "channel": "chat",
+    "subject": "Security concern",
+    "message": "I shared a one-time code with someone who said they were from your fraud team and now I am worried.",
+    "metadata": {
+      "customerTenureMonths": 38,
+      "plan": "premium",
+      "monthlySpendAud": 237,
+      "priorContacts30d": 0,
+      "accountAgeDays": 1165,
+      "region": "AU"
+    },
+    "groundTruth": {
+      "route": "fraud_security",
+      "urgency": "high",
+      "churnRisk": "low",
+      "fraudRisk": "high",
+      "humanEscalation": true,
+      "customerValue": "medium"
+    }
+  },
+  {
+    "id": "CC-041",
+    "channel": "email",
+    "subject": "Locked out",
+    "message": "I entered the wrong password a few times and now the account is locked. Can you unlock it?",
+    "metadata": {
+      "customerTenureMonths": 22,
+      "plan": "basic",
+      "monthlySpendAud": 95,
+      "priorContacts30d": 2,
+      "accountAgeDays": 673,
+      "region": "NZ"
+    },
+    "groundTruth": {
+      "route": "account_access",
+      "urgency": "medium",
+      "churnRisk": "low",
+      "fraudRisk": "low",
+      "humanEscalation": false,
+      "customerValue": "medium"
+    }
+  },
+  {
+    "id": "CC-042",
+    "channel": "call_transcript",
+    "subject": "Forgot password",
+    "message": "I forgot my password and the reset email has not arrived after 20 minutes.",
+    "metadata": {
+      "customerTenureMonths": 36,
+      "plan": "basic",
+      "monthlySpendAud": 108,
+      "priorContacts30d": 2,
+      "accountAgeDays": 1081,
+      "region": "SG"
+    },
+    "groundTruth": {
+      "route": "account_access",
+      "urgency": "medium",
+      "churnRisk": "low",
+      "fraudRisk": "low",
+      "humanEscalation": false,
+      "customerValue": "medium"
+    }
+  },
+  {
+    "id": "CC-043",
+    "channel": "chat",
+    "subject": "MFA phone lost",
+    "message": "I lost the phone that has my authenticator app. How can I regain access?",
+    "metadata": {
+      "customerTenureMonths": 50,
+      "plan": "basic",
+      "monthlySpendAud": 31,
+      "priorContacts30d": 2,
+      "accountAgeDays": 1518,
+      "region": "AU"
+    },
+    "groundTruth": {
+      "route": "account_access",
+      "urgency": "high",
+      "churnRisk": "low",
+      "fraudRisk": "low",
+      "humanEscalation": true,
+      "customerValue": "medium"
+    }
+  },
+  {
+    "id": "CC-044",
+    "channel": "email",
+    "subject": "Cannot verify identity",
+    "message": "The identity check keeps rejecting my licence photo even though it is clear.",
+    "metadata": {
+      "customerTenureMonths": 64,
+      "plan": "basic",
+      "monthlySpendAud": 44,
+      "priorContacts30d": 2,
+      "accountAgeDays": 1926,
+      "region": "NZ"
+    },
+    "groundTruth": {
+      "route": "account_access",
+      "urgency": "medium",
+      "churnRisk": "low",
+      "fraudRisk": "low",
+      "humanEscalation": true,
+      "customerValue": "high"
+    }
+  },
+  {
+    "id": "CC-045",
+    "channel": "call_transcript",
+    "subject": "Account disabled",
+    "message": "My account says disabled when I try to sign in. I have not used it for about six months.",
+    "metadata": {
+      "customerTenureMonths": 78,
+      "plan": "basic",
+      "monthlySpendAud": 57,
+      "priorContacts30d": 2,
+      "accountAgeDays": 2363,
+      "region": "SG"
+    },
+    "groundTruth": {
+      "route": "account_access",
+      "urgency": "medium",
+      "churnRisk": "low",
+      "fraudRisk": "low",
+      "humanEscalation": true,
+      "customerValue": "high"
+    }
+  },
+  {
+    "id": "CC-046",
+    "channel": "chat",
+    "subject": "Email changed",
+    "message": "I changed jobs and no longer have access to the old work email tied to the account.",
+    "metadata": {
+      "customerTenureMonths": 8,
+      "plan": "basic",
+      "monthlySpendAud": 70,
+      "priorContacts30d": 2,
+      "accountAgeDays": 251,
+      "region": "AU"
+    },
+    "groundTruth": {
+      "route": "account_access",
+      "urgency": "medium",
+      "churnRisk": "low",
+      "fraudRisk": "low",
+      "humanEscalation": true,
+      "customerValue": "medium"
+    }
+  },
+  {
+    "id": "CC-047",
+    "channel": "email",
+    "subject": "Reset link expired",
+    "message": "The password reset link says it has expired immediately after I click it.",
+    "metadata": {
+      "customerTenureMonths": 22,
+      "plan": "basic",
+      "monthlySpendAud": 83,
+      "priorContacts30d": 2,
+      "accountAgeDays": 688,
+      "region": "NZ"
+    },
+    "groundTruth": {
+      "route": "account_access",
+      "urgency": "medium",
+      "churnRisk": "low",
+      "fraudRisk": "low",
+      "humanEscalation": false,
+      "customerValue": "medium"
+    }
+  },
+  {
+    "id": "CC-048",
+    "channel": "call_transcript",
+    "subject": "No verification code",
+    "message": "The SMS verification code never arrives, but normal texts are working.",
+    "metadata": {
+      "customerTenureMonths": 36,
+      "plan": "basic",
+      "monthlySpendAud": 96,
+      "priorContacts30d": 2,
+      "accountAgeDays": 1096,
+      "region": "SG"
+    },
+    "groundTruth": {
+      "route": "account_access",
+      "urgency": "medium",
+      "churnRisk": "low",
+      "fraudRisk": "low",
+      "humanEscalation": false,
+      "customerValue": "medium"
+    }
+  },
+  {
+    "id": "CC-049",
+    "channel": "chat",
+    "subject": "SSO issue",
+    "message": "Our staff cannot sign in through SSO after the domain configuration changed.",
+    "metadata": {
+      "customerTenureMonths": 50,
+      "plan": "basic",
+      "monthlySpendAud": 109,
+      "priorContacts30d": 2,
+      "accountAgeDays": 1504,
+      "region": "AU"
+    },
+    "groundTruth": {
+      "route": "account_access",
+      "urgency": "high",
+      "churnRisk": "low",
+      "fraudRisk": "low",
+      "humanEscalation": true,
+      "customerValue": "medium"
+    }
+  },
+  {
+    "id": "CC-050",
+    "channel": "email",
+    "subject": "Recover old account",
+    "message": "I found an old account I need access to for records, but I no longer remember the login details.",
+    "metadata": {
+      "customerTenureMonths": 64,
+      "plan": "basic",
+      "monthlySpendAud": 32,
+      "priorContacts30d": 2,
+      "accountAgeDays": 1941,
+      "region": "NZ"
+    },
+    "groundTruth": {
+      "route": "account_access",
+      "urgency": "medium",
+      "churnRisk": "low",
+      "fraudRisk": "low",
+      "humanEscalation": false,
+      "customerValue": "high"
+    }
+  },
+  {
+    "id": "CC-051",
+    "channel": "call_transcript",
+    "subject": "Formal complaint",
+    "message": "I want to lodge a formal complaint about how this issue has been handled over the last two weeks.",
+    "metadata": {
+      "customerTenureMonths": 48,
+      "plan": "premium",
+      "monthlySpendAud": 200,
+      "priorContacts30d": 4,
+      "accountAgeDays": 1449,
+      "region": "SG"
+    },
+    "groundTruth": {
+      "route": "complaints",
+      "urgency": "medium",
+      "churnRisk": "low",
+      "fraudRisk": "low",
+      "humanEscalation": true,
+      "customerValue": "medium"
+    }
+  },
+  {
+    "id": "CC-052",
+    "channel": "chat",
+    "subject": "Poor service",
+    "message": "I waited 70 minutes yesterday and then the call disconnected. This level of service is unacceptable.",
+    "metadata": {
+      "customerTenureMonths": 62,
+      "plan": "premium",
+      "monthlySpendAud": 213,
+      "priorContacts30d": 4,
+      "accountAgeDays": 1886,
+      "region": "AU"
+    },
+    "groundTruth": {
+      "route": "complaints",
+      "urgency": "medium",
+      "churnRisk": "low",
+      "fraudRisk": "low",
+      "humanEscalation": true,
+      "customerValue": "high"
+    }
+  },
+  {
+    "id": "CC-053",
+    "channel": "email",
+    "subject": "Repeated issue",
+    "message": "This is the fourth time I have contacted you about the same problem and it is still not resolved.",
+    "metadata": {
+      "customerTenureMonths": 76,
+      "plan": "premium",
+      "monthlySpendAud": 226,
+      "priorContacts30d": 4,
+      "accountAgeDays": 2294,
+      "region": "NZ"
+    },
+    "groundTruth": {
+      "route": "complaints",
+      "urgency": "medium",
+      "churnRisk": "medium",
+      "fraudRisk": "low",
+      "humanEscalation": true,
+      "customerValue": "high"
+    }
+  },
+  {
+    "id": "CC-054",
+    "channel": "call_transcript",
+    "subject": "Manager please",
+    "message": "Please have a manager contact me. The previous agent promised a callback that never happened.",
+    "metadata": {
+      "customerTenureMonths": 6,
+      "plan": "premium",
+      "monthlySpendAud": 239,
+      "priorContacts30d": 4,
+      "accountAgeDays": 182,
+      "region": "SG"
+    },
+    "groundTruth": {
+      "route": "complaints",
+      "urgency": "medium",
+      "churnRisk": "low",
+      "fraudRisk": "low",
+      "humanEscalation": true,
+      "customerValue": "medium"
+    }
+  },
+  {
+    "id": "CC-055",
+    "channel": "chat",
+    "subject": "Ombudsman complaint",
+    "message": "If this is not resolved this week I intend to take the matter to the relevant ombudsman.",
+    "metadata": {
+      "customerTenureMonths": 20,
+      "plan": "premium",
+      "monthlySpendAud": 252,
+      "priorContacts30d": 4,
+      "accountAgeDays": 619,
+      "region": "AU"
+    },
+    "groundTruth": {
+      "route": "complaints",
+      "urgency": "high",
+      "churnRisk": "medium",
+      "fraudRisk": "low",
+      "humanEscalation": true,
+      "customerValue": "high"
+    }
+  },
+  {
+    "id": "CC-056",
+    "channel": "email",
+    "subject": "Unacceptable treatment",
+    "message": "Your staff member was dismissive and rude when I explained that I needed extra assistance.",
+    "metadata": {
+      "customerTenureMonths": 34,
+      "plan": "premium",
+      "monthlySpendAud": 265,
+      "priorContacts30d": 4,
+      "accountAgeDays": 1027,
+      "region": "NZ"
+    },
+    "groundTruth": {
+      "route": "complaints",
+      "urgency": "medium",
+      "churnRisk": "low",
+      "fraudRisk": "low",
+      "humanEscalation": true,
+      "customerValue": "high"
+    }
+  },
+  {
+    "id": "CC-057",
+    "channel": "call_transcript",
+    "subject": "Complaint about agent",
+    "message": "I am making a complaint about the advice given by your agent, which caused me to incur an extra charge.",
+    "metadata": {
+      "customerTenureMonths": 48,
+      "plan": "premium",
+      "monthlySpendAud": 188,
+      "priorContacts30d": 4,
+      "accountAgeDays": 1464,
+      "region": "SG"
+    },
+    "groundTruth": {
+      "route": "complaints",
+      "urgency": "medium",
+      "churnRisk": "low",
+      "fraudRisk": "low",
+      "humanEscalation": true,
+      "customerValue": "medium"
+    }
+  },
+  {
+    "id": "CC-058",
+    "channel": "chat",
+    "subject": "Still unresolved",
+    "message": "I have case numbers from three previous chats and nobody seems to read the history. I need this escalated.",
+    "metadata": {
+      "customerTenureMonths": 62,
+      "plan": "premium",
+      "monthlySpendAud": 201,
+      "priorContacts30d": 4,
+      "accountAgeDays": 1872,
+      "region": "AU"
+    },
+    "groundTruth": {
+      "route": "complaints",
+      "urgency": "high",
+      "churnRisk": "medium",
+      "fraudRisk": "low",
+      "humanEscalation": true,
+      "customerValue": "high"
+    }
+  },
+  {
+    "id": "CC-059",
+    "channel": "email",
+    "subject": "Service failure",
+    "message": "The service has failed twice during critical periods and your response has been inadequate.",
+    "metadata": {
+      "customerTenureMonths": 76,
+      "plan": "premium",
+      "monthlySpendAud": 214,
+      "priorContacts30d": 4,
+      "accountAgeDays": 2280,
+      "region": "NZ"
+    },
+    "groundTruth": {
+      "route": "complaints",
+      "urgency": "medium",
+      "churnRisk": "medium",
+      "fraudRisk": "low",
+      "humanEscalation": true,
+      "customerValue": "high"
+    }
+  },
+  {
+    "id": "CC-060",
+    "channel": "call_transcript",
+    "subject": "Escalate complaint",
+    "message": "Please escalate my complaint to a senior complaints specialist and confirm the reference number.",
+    "metadata": {
+      "customerTenureMonths": 6,
+      "plan": "premium",
+      "monthlySpendAud": 227,
+      "priorContacts30d": 4,
+      "accountAgeDays": 197,
+      "region": "SG"
+    },
+    "groundTruth": {
+      "route": "complaints",
+      "urgency": "high",
+      "churnRisk": "medium",
+      "fraudRisk": "low",
+      "humanEscalation": true,
+      "customerValue": "medium"
+    }
+  },
+  {
+    "id": "CC-061",
+    "channel": "chat",
+    "subject": "Refund request",
+    "message": "I purchased the add-on by mistake five minutes ago. Please refund it.",
+    "metadata": {
+      "customerTenureMonths": 74,
+      "plan": "basic",
+      "monthlySpendAud": 85,
+      "priorContacts30d": 0,
+      "accountAgeDays": 2225,
+      "region": "AU"
+    },
+    "groundTruth": {
+      "route": "refunds",
+      "urgency": "low",
+      "churnRisk": "low",
+      "fraudRisk": "low",
+      "humanEscalation": false,
+      "customerValue": "high"
+    }
+  },
+  {
+    "id": "CC-062",
+    "channel": "email",
+    "subject": "Where is my refund?",
+    "message": "You approved my refund 12 days ago but the money still has not appeared in my account.",
+    "metadata": {
+      "customerTenureMonths": 4,
+      "plan": "basic",
+      "monthlySpendAud": 98,
+      "priorContacts30d": 0,
+      "accountAgeDays": 142,
+      "region": "NZ"
+    },
+    "groundTruth": {
+      "route": "refunds",
+      "urgency": "medium",
+      "churnRisk": "low",
+      "fraudRisk": "low",
+      "humanEscalation": true,
+      "customerValue": "medium"
+    }
+  },
+  {
+    "id": "CC-063",
+    "channel": "call_transcript",
+    "subject": "Refund duplicate payment",
+    "message": "I was charged twice for the same order. Please refund the duplicate charge.",
+    "metadata": {
+      "customerTenureMonths": 18,
+      "plan": "basic",
+      "monthlySpendAud": 111,
+      "priorContacts30d": 0,
+      "accountAgeDays": 550,
+      "region": "SG"
+    },
+    "groundTruth": {
+      "route": "refunds",
+      "urgency": "low",
+      "churnRisk": "low",
+      "fraudRisk": "low",
+      "humanEscalation": false,
+      "customerValue": "medium"
+    }
+  },
+  {
+    "id": "CC-064",
+    "channel": "chat",
+    "subject": "Return credit",
+    "message": "The returned item was received by your warehouse last week. When will the credit be processed?",
+    "metadata": {
+      "customerTenureMonths": 32,
+      "plan": "basic",
+      "monthlySpendAud": 34,
+      "priorContacts30d": 0,
+      "accountAgeDays": 987,
+      "region": "AU"
+    },
+    "groundTruth": {
+      "route": "refunds",
+      "urgency": "low",
+      "churnRisk": "low",
+      "fraudRisk": "low",
+      "humanEscalation": false,
+      "customerValue": "medium"
+    }
+  },
+  {
+    "id": "CC-065",
+    "channel": "email",
+    "subject": "Cancel and refund",
+    "message": "Please cancel today’s renewal and refund it. I did not realise auto-renew was enabled.",
+    "metadata": {
+      "customerTenureMonths": 46,
+      "plan": "basic",
+      "monthlySpendAud": 47,
+      "priorContacts30d": 0,
+      "accountAgeDays": 1395,
+      "region": "NZ"
+    },
+    "groundTruth": {
+      "route": "refunds",
+      "urgency": "low",
+      "churnRisk": "low",
+      "fraudRisk": "low",
+      "humanEscalation": false,
+      "customerValue": "medium"
+    }
+  },
+  {
+    "id": "CC-066",
+    "channel": "call_transcript",
+    "subject": "Partial refund missing",
+    "message": "I was promised a full $120 refund but only $80 arrived. Where is the remaining $40?",
+    "metadata": {
+      "customerTenureMonths": 60,
+      "plan": "basic",
+      "monthlySpendAud": 60,
+      "priorContacts30d": 0,
+      "accountAgeDays": 1803,
+      "region": "SG"
+    },
+    "groundTruth": {
+      "route": "refunds",
+      "urgency": "medium",
+      "churnRisk": "low",
+      "fraudRisk": "low",
+      "humanEscalation": true,
+      "customerValue": "high"
+    }
+  },
+  {
+    "id": "CC-067",
+    "channel": "chat",
+    "subject": "Refund failed",
+    "message": "The refund status says failed. Can you reprocess it to my new card?",
+    "metadata": {
+      "customerTenureMonths": 74,
+      "plan": "basic",
+      "monthlySpendAud": 73,
+      "priorContacts30d": 0,
+      "accountAgeDays": 2240,
+      "region": "AU"
+    },
+    "groundTruth": {
+      "route": "refunds",
+      "urgency": "medium",
+      "churnRisk": "low",
+      "fraudRisk": "low",
+      "humanEscalation": true,
+      "customerValue": "high"
+    }
+  },
+  {
+    "id": "CC-068",
+    "channel": "email",
+    "subject": "Refund wrong amount",
+    "message": "I received a refund of $19 but the original charge was $49. Please correct it.",
+    "metadata": {
+      "customerTenureMonths": 4,
+      "plan": "basic",
+      "monthlySpendAud": 86,
+      "priorContacts30d": 0,
+      "accountAgeDays": 128,
+      "region": "NZ"
+    },
+    "groundTruth": {
+      "route": "refunds",
+      "urgency": "medium",
+      "churnRisk": "low",
+      "fraudRisk": "low",
+      "humanEscalation": true,
+      "customerValue": "medium"
+    }
+  },
+  {
+    "id": "CC-069",
+    "channel": "call_transcript",
+    "subject": "Goodwill refund request",
+    "message": "Given the outage lasted all day, I would like a goodwill refund for this month.",
+    "metadata": {
+      "customerTenureMonths": 18,
+      "plan": "basic",
+      "monthlySpendAud": 99,
+      "priorContacts30d": 0,
+      "accountAgeDays": 565,
+      "region": "SG"
+    },
+    "groundTruth": {
+      "route": "refunds",
+      "urgency": "low",
+      "churnRisk": "low",
+      "fraudRisk": "low",
+      "humanEscalation": false,
+      "customerValue": "medium"
+    }
+  },
+  {
+    "id": "CC-070",
+    "channel": "chat",
+    "subject": "Charge reversal",
+    "message": "The merchant confirmed they reversed the charge but it still appears as completed on my account.",
+    "metadata": {
+      "customerTenureMonths": 32,
+      "plan": "basic",
+      "monthlySpendAud": 112,
+      "priorContacts30d": 0,
+      "accountAgeDays": 973,
+      "region": "AU"
+    },
+    "groundTruth": {
+      "route": "refunds",
+      "urgency": "low",
+      "churnRisk": "low",
+      "fraudRisk": "low",
+      "humanEscalation": false,
+      "customerValue": "medium"
+    }
+  },
+  {
+    "id": "CC-071",
+    "channel": "email",
+    "subject": "Feature question",
+    "message": "Does the Premium plan include scheduled exports or is that only available for Business customers?",
+    "metadata": {
+      "customerTenureMonths": 16,
+      "plan": "premium",
+      "monthlySpendAud": 190,
+      "priorContacts30d": 2,
+      "accountAgeDays": 481,
+      "region": "NZ"
+    },
+    "groundTruth": {
+      "route": "product_info",
+      "urgency": "medium",
+      "churnRisk": "low",
+      "fraudRisk": "low",
+      "humanEscalation": false,
+      "customerValue": "medium"
+    }
+  },
+  {
+    "id": "CC-072",
+    "channel": "call_transcript",
+    "subject": "Plan comparison",
+    "message": "What is the difference between Plus and Premium for a team of five?",
+    "metadata": {
+      "customerTenureMonths": 30,
+      "plan": "premium",
+      "monthlySpendAud": 203,
+      "priorContacts30d": 2,
+      "accountAgeDays": 918,
+      "region": "SG"
+    },
+    "groundTruth": {
+      "route": "product_info",
+      "urgency": "low",
+      "churnRisk": "low",
+      "fraudRisk": "low",
+      "humanEscalation": false,
+      "customerValue": "medium"
+    }
+  },
+  {
+    "id": "CC-073",
+    "channel": "chat",
+    "subject": "Does it support X?",
+    "message": "Do you support SAML SSO and SCIM provisioning?",
+    "metadata": {
+      "customerTenureMonths": 44,
+      "plan": "premium",
+      "monthlySpendAud": 216,
+      "priorContacts30d": 2,
+      "accountAgeDays": 1326,
+      "region": "AU"
+    },
+    "groundTruth": {
+      "route": "product_info",
+      "urgency": "low",
+      "churnRisk": "low",
+      "fraudRisk": "low",
+      "humanEscalation": false,
+      "customerValue": "medium"
+    }
+  },
+  {
+    "id": "CC-074",
+    "channel": "email",
+    "subject": "Pricing question",
+    "message": "How much would the service cost for 25 users if we pay annually?",
+    "metadata": {
+      "customerTenureMonths": 58,
+      "plan": "premium",
+      "monthlySpendAud": 229,
+      "priorContacts30d": 2,
+      "accountAgeDays": 1763,
+      "region": "NZ"
+    },
+    "groundTruth": {
+      "route": "product_info",
+      "urgency": "low",
+      "churnRisk": "low",
+      "fraudRisk": "low",
+      "humanEscalation": false,
+      "customerValue": "medium"
+    }
+  },
+  {
+    "id": "CC-075",
+    "channel": "call_transcript",
+    "subject": "Before I upgrade",
+    "message": "Before I upgrade, can you tell me whether audit logs are retained for more than 90 days?",
+    "metadata": {
+      "customerTenureMonths": 72,
+      "plan": "premium",
+      "monthlySpendAud": 242,
+      "priorContacts30d": 2,
+      "accountAgeDays": 2171,
+      "region": "SG"
+    },
+    "groundTruth": {
+      "route": "product_info",
+      "urgency": "medium",
+      "churnRisk": "low",
+      "fraudRisk": "low",
+      "humanEscalation": false,
+      "customerValue": "high"
+    }
+  },
+  {
+    "id": "CC-076",
+    "channel": "chat",
+    "subject": "API limits",
+    "message": "What are the API rate limits on the Business plan?",
+    "metadata": {
+      "customerTenureMonths": 2,
+      "plan": "premium",
+      "monthlySpendAud": 255,
+      "priorContacts30d": 2,
+      "accountAgeDays": 88,
+      "region": "AU"
+    },
+    "groundTruth": {
+      "route": "product_info",
+      "urgency": "low",
+      "churnRisk": "low",
+      "fraudRisk": "low",
+      "humanEscalation": false,
+      "customerValue": "high"
+    }
+  },
+  {
+    "id": "CC-077",
+    "channel": "email",
+    "subject": "Business plan details",
+    "message": "Does the Business plan include a dedicated support contact and consolidated billing?",
+    "metadata": {
+      "customerTenureMonths": 16,
+      "plan": "premium",
+      "monthlySpendAud": 268,
+      "priorContacts30d": 2,
+      "accountAgeDays": 496,
+      "region": "NZ"
+    },
+    "groundTruth": {
+      "route": "product_info",
+      "urgency": "low",
+      "churnRisk": "low",
+      "fraudRisk": "low",
+      "humanEscalation": false,
+      "customerValue": "high"
+    }
+  },
+  {
+    "id": "CC-078",
+    "channel": "call_transcript",
+    "subject": "Data retention",
+    "message": "How long do you retain deleted customer data after account closure?",
+    "metadata": {
+      "customerTenureMonths": 30,
+      "plan": "premium",
+      "monthlySpendAud": 191,
+      "priorContacts30d": 2,
+      "accountAgeDays": 904,
+      "region": "SG"
+    },
+    "groundTruth": {
+      "route": "product_info",
+      "urgency": "low",
+      "churnRisk": "low",
+      "fraudRisk": "low",
+      "humanEscalation": false,
+      "customerValue": "medium"
+    }
+  },
+  {
+    "id": "CC-079",
+    "channel": "chat",
+    "subject": "Mobile support",
+    "message": "Can all features be used from the Android app or are some desktop only?",
+    "metadata": {
+      "customerTenureMonths": 44,
+      "plan": "premium",
+      "monthlySpendAud": 204,
+      "priorContacts30d": 2,
+      "accountAgeDays": 1341,
+      "region": "AU"
+    },
+    "groundTruth": {
+      "route": "product_info",
+      "urgency": "medium",
+      "churnRisk": "low",
+      "fraudRisk": "low",
+      "humanEscalation": false,
+      "customerValue": "medium"
+    }
+  },
+  {
+    "id": "CC-080",
+    "channel": "email",
+    "subject": "Trial question",
+    "message": "Does the free trial include integrations, and will it automatically charge me when the trial ends?",
+    "metadata": {
+      "customerTenureMonths": 58,
+      "plan": "premium",
+      "monthlySpendAud": 217,
+      "priorContacts30d": 2,
+      "accountAgeDays": 1749,
+      "region": "NZ"
+    },
+    "groundTruth": {
+      "route": "product_info",
+      "urgency": "low",
+      "churnRisk": "low",
+      "fraudRisk": "low",
+      "humanEscalation": false,
+      "customerValue": "medium"
+    }
+  },
+  {
+    "id": "CC-081",
+    "channel": "call_transcript",
+    "subject": "Update contact details",
+    "message": "I moved house and need to update my mailing address. Where do I do that?",
+    "metadata": {
+      "customerTenureMonths": 42,
+      "plan": "basic",
+      "monthlySpendAud": 75,
+      "priorContacts30d": 4,
+      "accountAgeDays": 1286,
+      "region": "SG"
+    },
+    "groundTruth": {
+      "route": "general_service",
+      "urgency": "medium",
+      "churnRisk": "low",
+      "fraudRisk": "low",
+      "humanEscalation": false,
+      "customerValue": "medium"
+    }
+  },
+  {
+    "id": "CC-082",
+    "channel": "chat",
+    "subject": "Opening hours",
+    "message": "What hours is phone support available on public holidays?",
+    "metadata": {
+      "customerTenureMonths": 56,
+      "plan": "basic",
+      "monthlySpendAud": 88,
+      "priorContacts30d": 4,
+      "accountAgeDays": 1694,
+      "region": "AU"
+    },
+    "groundTruth": {
+      "route": "general_service",
+      "urgency": "low",
+      "churnRisk": "low",
+      "fraudRisk": "low",
+      "humanEscalation": false,
+      "customerValue": "medium"
+    }
+  },
+  {
+    "id": "CC-083",
+    "channel": "email",
+    "subject": "Need statement",
+    "message": "Could you send me a copy of my account statement for June?",
+    "metadata": {
+      "customerTenureMonths": 70,
+      "plan": "basic",
+      "monthlySpendAud": 101,
+      "priorContacts30d": 4,
+      "accountAgeDays": 2102,
+      "region": "NZ"
+    },
+    "groundTruth": {
+      "route": "general_service",
+      "urgency": "low",
+      "churnRisk": "low",
+      "fraudRisk": "low",
+      "humanEscalation": false,
+      "customerValue": "high"
+    }
+  },
+  {
+    "id": "CC-084",
+    "channel": "call_transcript",
+    "subject": "Where to find setting",
+    "message": "Where can I change the default language for emails?",
+    "metadata": {
+      "customerTenureMonths": 84,
+      "plan": "basic",
+      "monthlySpendAud": 114,
+      "priorContacts30d": 4,
+      "accountAgeDays": 2539,
+      "region": "SG"
+    },
+    "groundTruth": {
+      "route": "general_service",
+      "urgency": "low",
+      "churnRisk": "low",
+      "fraudRisk": "low",
+      "humanEscalation": false,
+      "customerValue": "high"
+    }
+  },
+  {
+    "id": "CC-085",
+    "channel": "chat",
+    "subject": "Marketing opt-out",
+    "message": "I cannot find the setting to opt out of marketing messages. Can you point me to it?",
+    "metadata": {
+      "customerTenureMonths": 14,
+      "plan": "basic",
+      "monthlySpendAud": 37,
+      "priorContacts30d": 4,
+      "accountAgeDays": 427,
+      "region": "AU"
+    },
+    "groundTruth": {
+      "route": "general_service",
+      "urgency": "medium",
+      "churnRisk": "low",
+      "fraudRisk": "low",
+      "humanEscalation": false,
+      "customerValue": "low"
+    }
+  },
+  {
+    "id": "CC-086",
+    "channel": "email",
+    "subject": "Confirmation request",
+    "message": "Can you confirm whether my address update from yesterday has been saved?",
+    "metadata": {
+      "customerTenureMonths": 28,
+      "plan": "basic",
+      "monthlySpendAud": 50,
+      "priorContacts30d": 4,
+      "accountAgeDays": 864,
+      "region": "NZ"
+    },
+    "groundTruth": {
+      "route": "general_service",
+      "urgency": "low",
+      "churnRisk": "low",
+      "fraudRisk": "low",
+      "humanEscalation": false,
+      "customerValue": "medium"
+    }
+  },
+  {
+    "id": "CC-087",
+    "channel": "call_transcript",
+    "subject": "Change name",
+    "message": "I recently changed my surname. What documents do you need to update the account?",
+    "metadata": {
+      "customerTenureMonths": 42,
+      "plan": "basic",
+      "monthlySpendAud": 63,
+      "priorContacts30d": 4,
+      "accountAgeDays": 1272,
+      "region": "SG"
+    },
+    "groundTruth": {
+      "route": "general_service",
+      "urgency": "low",
+      "churnRisk": "low",
+      "fraudRisk": "low",
+      "humanEscalation": false,
+      "customerValue": "medium"
+    }
+  },
+  {
+    "id": "CC-088",
+    "channel": "chat",
+    "subject": "Communication preference",
+    "message": "Please change my communication preference from SMS to email.",
+    "metadata": {
+      "customerTenureMonths": 56,
+      "plan": "basic",
+      "monthlySpendAud": 76,
+      "priorContacts30d": 4,
+      "accountAgeDays": 1680,
+      "region": "AU"
+    },
+    "groundTruth": {
+      "route": "general_service",
+      "urgency": "low",
+      "churnRisk": "low",
+      "fraudRisk": "low",
+      "humanEscalation": false,
+      "customerValue": "medium"
+    }
+  },
+  {
+    "id": "CC-089",
+    "channel": "email",
+    "subject": "Account history",
+    "message": "How can I download a list of my support cases from the past year?",
+    "metadata": {
+      "customerTenureMonths": 70,
+      "plan": "basic",
+      "monthlySpendAud": 89,
+      "priorContacts30d": 4,
+      "accountAgeDays": 2117,
+      "region": "NZ"
+    },
+    "groundTruth": {
+      "route": "general_service",
+      "urgency": "medium",
+      "churnRisk": "low",
+      "fraudRisk": "low",
+      "humanEscalation": false,
+      "customerValue": "high"
+    }
+  },
+  {
+    "id": "CC-090",
+    "channel": "call_transcript",
+    "subject": "General help",
+    "message": "I have a general question about how to add another authorised contact to the account.",
+    "metadata": {
+      "customerTenureMonths": 84,
+      "plan": "basic",
+      "monthlySpendAud": 102,
+      "priorContacts30d": 4,
+      "accountAgeDays": 2525,
+      "region": "SG"
+    },
+    "groundTruth": {
+      "route": "general_service",
+      "urgency": "low",
+      "churnRisk": "low",
+      "fraudRisk": "low",
+      "humanEscalation": false,
+      "customerValue": "high"
+    }
+  },
+  {
+    "id": "CC-091",
+    "channel": "chat",
+    "subject": "Intermittent sync",
+    "message": "The sync works sometimes but every few hours it stops until we reconnect the integration.",
+    "metadata": {
+      "customerTenureMonths": 68,
+      "plan": "premium",
+      "monthlySpendAud": 180,
+      "priorContacts30d": 0,
+      "accountAgeDays": 2062,
+      "region": "AU"
+    },
+    "groundTruth": {
+      "route": "technical",
+      "urgency": "medium",
+      "churnRisk": "low",
+      "fraudRisk": "low",
+      "humanEscalation": false,
+      "customerValue": "high"
+    }
+  },
+  {
+    "id": "CC-092",
+    "channel": "email",
+    "subject": "Webhook retries",
+    "message": "Our webhook endpoint is healthy but your service is retrying successful events and creating duplicates.",
+    "metadata": {
+      "customerTenureMonths": 82,
+      "plan": "premium",
+      "monthlySpendAud": 193,
+      "priorContacts30d": 0,
+      "accountAgeDays": 2470,
+      "region": "NZ"
+    },
+    "groundTruth": {
+      "route": "technical",
+      "urgency": "critical",
+      "churnRisk": "medium",
+      "fraudRisk": "low",
+      "humanEscalation": true,
+      "customerValue": "high"
+    }
+  },
+  {
+    "id": "CC-093",
+    "channel": "call_transcript",
+    "subject": "Browser freeze",
+    "message": "The browser freezes whenever I open a customer record with more than 200 notes.",
+    "metadata": {
+      "customerTenureMonths": 12,
+      "plan": "premium",
+      "monthlySpendAud": 206,
+      "priorContacts30d": 0,
+      "accountAgeDays": 387,
+      "region": "SG"
+    },
+    "groundTruth": {
+      "route": "technical",
+      "urgency": "high",
+      "churnRisk": "low",
+      "fraudRisk": "low",
+      "humanEscalation": true,
+      "customerValue": "medium"
+    }
+  },
+  {
+    "id": "CC-094",
+    "channel": "chat",
+    "subject": "Report calculation issue",
+    "message": "The monthly report total does not match the sum of the underlying rows. I can reproduce it on two accounts.",
+    "metadata": {
+      "customerTenureMonths": 26,
+      "plan": "premium",
+      "monthlySpendAud": 219,
+      "priorContacts30d": 0,
+      "accountAgeDays": 795,
+      "region": "AU"
+    },
+    "groundTruth": {
+      "route": "technical",
+      "urgency": "medium",
+      "churnRisk": "low",
+      "fraudRisk": "low",
+      "humanEscalation": false,
+      "customerValue": "medium"
+    }
+  },
+  {
+    "id": "CC-095",
+    "channel": "email",
+    "subject": "Upload stalled",
+    "message": "A 40MB upload sits at 99% forever and never completes.",
+    "metadata": {
+      "customerTenureMonths": 40,
+      "plan": "premium",
+      "monthlySpendAud": 232,
+      "priorContacts30d": 0,
+      "accountAgeDays": 1203,
+      "region": "NZ"
+    },
+    "groundTruth": {
+      "route": "technical",
+      "urgency": "medium",
+      "churnRisk": "low",
+      "fraudRisk": "low",
+      "humanEscalation": false,
+      "customerValue": "medium"
+    }
+  },
+  {
+    "id": "CC-096",
+    "channel": "call_transcript",
+    "subject": "Search broken",
+    "message": "Search returns no results for customers I can see in the customer list.",
+    "metadata": {
+      "customerTenureMonths": 54,
+      "plan": "premium",
+      "monthlySpendAud": 245,
+      "priorContacts30d": 0,
+      "accountAgeDays": 1640,
+      "region": "SG"
+    },
+    "groundTruth": {
+      "route": "technical",
+      "urgency": "medium",
+      "churnRisk": "low",
+      "fraudRisk": "low",
+      "humanEscalation": false,
+      "customerValue": "medium"
+    }
+  },
+  {
+    "id": "CC-097",
+    "channel": "chat",
+    "subject": "Automation stopped",
+    "message": "An automation that has worked for months stopped running yesterday without any configuration change.",
+    "metadata": {
+      "customerTenureMonths": 68,
+      "plan": "premium",
+      "monthlySpendAud": 258,
+      "priorContacts30d": 0,
+      "accountAgeDays": 2048,
+      "region": "AU"
+    },
+    "groundTruth": {
+      "route": "technical",
+      "urgency": "critical",
+      "churnRisk": "medium",
+      "fraudRisk": "low",
+      "humanEscalation": true,
+      "customerValue": "high"
+    }
+  },
+  {
+    "id": "CC-098",
+    "channel": "email",
+    "subject": "Desktop client error",
+    "message": "The desktop client shows error 504 every time it starts, while the web version works.",
+    "metadata": {
+      "customerTenureMonths": 82,
+      "plan": "premium",
+      "monthlySpendAud": 181,
+      "priorContacts30d": 0,
+      "accountAgeDays": 2485,
+      "region": "NZ"
+    },
+    "groundTruth": {
+      "route": "technical",
+      "urgency": "high",
+      "churnRisk": "low",
+      "fraudRisk": "low",
+      "humanEscalation": true,
+      "customerValue": "high"
+    }
+  },
+  {
+    "id": "CC-099",
+    "channel": "call_transcript",
+    "subject": "Timezone bug",
+    "message": "Appointments created in Melbourne are appearing one hour early for our New Zealand users.",
+    "metadata": {
+      "customerTenureMonths": 12,
+      "plan": "premium",
+      "monthlySpendAud": 194,
+      "priorContacts30d": 0,
+      "accountAgeDays": 373,
+      "region": "SG"
+    },
+    "groundTruth": {
+      "route": "technical",
+      "urgency": "medium",
+      "churnRisk": "low",
+      "fraudRisk": "low",
+      "humanEscalation": false,
+      "customerValue": "medium"
+    }
+  },
+  {
+    "id": "CC-100",
+    "channel": "chat",
+    "subject": "Bulk action failure",
+    "message": "Bulk archive says success but only processes the first 50 records out of 300.",
+    "metadata": {
+      "customerTenureMonths": 26,
+      "plan": "premium",
+      "monthlySpendAud": 207,
+      "priorContacts30d": 0,
+      "accountAgeDays": 781,
+      "region": "AU"
+    },
+    "groundTruth": {
+      "route": "technical",
+      "urgency": "medium",
+      "churnRisk": "low",
+      "fraudRisk": "low",
+      "humanEscalation": false,
+      "customerValue": "medium"
+    }
+  }
+]
