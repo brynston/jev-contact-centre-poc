@@ -4,3 +4,4 @@ dist/
 results/*.jsonl
 results/*.json
 !.gitkeep
+.DS_Store
