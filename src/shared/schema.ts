@@ -1,10 +1,17 @@
 import { z } from 'zod';
 import { ROUTES, URGENCY, RISK, CUSTOMER_VALUE } from './types.js';
 
-const routeProb = z.object(Object.fromEntries(ROUTES.map(k => [k,z.number().min(0).max(1)])) as any);
-const urgencyProb = z.object(Object.fromEntries(URGENCY.map(k => [k,z.number().min(0).max(1)])) as any);
-const riskProb = z.object(Object.fromEntries(RISK.map(k => [k,z.number().min(0).max(1)])) as any);
-const valueProb = z.object(Object.fromEntries(CUSTOMER_VALUE.map(k => [k,z.number().min(0).max(1)])) as any);
+function probabilityMap<const T extends readonly string[]>(keys: T) {
+  const shape = Object.fromEntries(keys.map(k => [k, z.number().min(0).max(1)])) as {
+    [K in T[number]]: z.ZodNumber;
+  };
+  return z.object(shape);
+}
+
+const routeProb = probabilityMap(ROUTES);
+const urgencyProb = probabilityMap(URGENCY);
+const riskProb = probabilityMap(RISK);
+const valueProb = probabilityMap(CUSTOMER_VALUE);
 
 export const decisionOutputSchema = z.object({
   route: z.enum(ROUTES),

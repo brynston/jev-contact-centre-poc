@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import type { ContactCentreInteraction, CustomerValue, Risk, Urgency } from '../src/shared/types.js';
+import { challengeScenarios } from './challenge-scenarios.js';
 
 const scenarios = [
   {
@@ -133,7 +134,7 @@ const scenarios = [
   },
   {
     route:'general_service' as const,
-    subjects:['Update contact details','Change mailing address','Opening hours','Need statement','Where to find setting','Confirmation request','Change name','Communication preference','Account history','General help'],
+    subjects:['Update contact details','Opening hours','Need statement','Where to find setting','Marketing opt-out','Confirmation request','Change name','Communication preference','Account history','General help'],
     messages:[
       'I moved house and need to update my mailing address. Where do I do that?',
       'What hours is phone support available on public holidays?',
@@ -236,6 +237,98 @@ for (let s=0; s<scenarios.length; s++) {
       }
     });
   }
+}
+
+// Keep CC-001 through CC-100 byte-for-byte equivalent as records to the original baseline.
+// Ten contextual variants of each of 90 new narratives supply the remaining 900 cases.
+const history = [
+  'The older email underneath this one concerns an address update. That was completed last month and the confirmation is in our files. I have left it in the thread because it contains the account reference, not because the address still needs attention.',
+  'A colleague forwarded an old note headed "cancel request" with this thread. That note was for a different workspace and has been closed. Please use the information in my latest message for this account rather than actioning the forwarded heading.',
+  'There was a card alert earlier in the year. Our bank checked it, we recognised the purchase and the case was closed. I mention that only because the old reference still appears on the contact form; it does not describe what I am asking about today.',
+  'The subject line was copied from an internal template marked URGENT. The template is used for every supplier query. I have described the actual effect and timing below so the copied heading does not become the only information considered.',
+  'Our previous conversation dealt with the mobile app, which is now working. I have kept the earlier troubleshooting notes in the thread for continuity, but the current request is different. We do not need those old steps repeated.',
+  'The first message was written by a colleague who had only part of the history. We checked the account together before sending this follow-up. The description below replaces that earlier summary where the two differ.',
+  'I was transferred after choosing the closest available option on the automated menu. None of the menu descriptions quite matched. Please read the details before using that selection to decide where the case belongs.',
+  'I collected the confirmations from our earlier contacts and put them in chronological order. Some describe matters that have already been completed. The final update below explains what is still outstanding and what outcome we need.',
+  'The initial chat disconnected before I finished the explanation. I am continuing from the same account and have not opened a second request. Please keep the old reference for continuity but use this complete description.',
+  'I am forwarding a long thread because the earlier replies contain useful dates. It includes several resolved questions and an outdated summary. I have added the latest facts and the requested next step so those older passages do not obscure the current position.',
+] as const;
+
+const timing: Record<Urgency, readonly string[]> = {
+  low: ['Nothing depends on this today or tomorrow; a response over the next few days is fine.', 'The task is planned for next week or later, and the current arrangement can remain in place until then.'],
+  medium: ['Please pick this up in the usual queue, ideally by the next business day. There is no live incident requiring action within minutes.', 'Tomorrow is a reasonable time for a response. We can continue with the present arrangement in the meantime.'],
+  high: ['The cut-off or impact described above means we need a response today, rather than several days from now.', 'Please prioritise this for today. We have only the limited temporary arrangement described above and need to know the next step before the day ends.'],
+  critical: ['The harm described above is happening now and there is no safe alternative that lets us carry on as normal. Please intervene immediately.', 'Please address the active situation straight away. Waiting for the ordinary queue will allow the current loss or interruption to continue.'],
+};
+
+const followup = [
+  'I checked the account reference again before sending this. The same workspace is involved throughout the current request, and the older closed cases should stay closed. Please confirm the next step and what information is actually needed, rather than asking us to resubmit the entire thread.',
+  'I have separated the old confirmations from the latest details in our own notes. If something in the forwarded history appears inconsistent, the latest facts in this message are the ones I have checked. Please keep the outcome tied to this request so we can explain it accurately to the rest of the team.',
+  'We can provide the existing reference through your normal verified channel. I have avoided including identity documents, full payment details or credentials here. Please explain the supported next step and confirm which earlier actions, if any, you need us to repeat before the case can move forward.',
+  'I would appreciate a written summary of the outcome because different colleagues will read the reply. We do not need the unrelated old cases opened again. Please make clear what has been checked and what remains for us to do, so the next person does not have to reconstruct the whole conversation.',
+  'Before replying, please check the latest update against the earlier notes. We have already completed the steps mentioned in the closed parts of the thread. I want to avoid another cycle where an outdated heading sends us through the same process without addressing the current facts.',
+] as const;
+
+for (let s = 0; s < challengeScenarios.length; s++) {
+  const sc = challengeScenarios[s];
+  for (let variant = 0; variant < 10; variant++) {
+    const n = data.length;
+    const plan = plans[(s + variant) % plans.length];
+    // Include short/long tenure independently of spend, and all four plans and value tiers.
+    const tenure = [2, 8, 17, 18, 36, 59, 60, 84, 5, 24][(s + variant) % 10];
+    const spendBase = { basic: 25, plus: 75, premium: 180, business: 650 }[plan];
+    const spend = spendBase + ((s * 17 + variant * 13) % 120);
+    const amount = 180 + ((s * 43 + variant * 71) % 2400);
+    const priorContacts = (s + variant) % 6;
+    const region = regions[(s + variant) % regions.length];
+    const channel = channels[(s + variant) % channels.length];
+    const tokens: Record<string, string> = {
+      seats: String(24 + ((s * 7 + variant * 11) % 90)),
+      smallSeats: String(3 + ((s + variant) % 12)),
+      amount: String(amount), smallAmount: String(5 + ((s + variant * 3) % 30)),
+      month: ['April', 'May', 'June', 'July', 'August'][variant % 5],
+      minutes: String(3 + ((s + variant) % 8)), retries: String(3 + ((s + variant) % 7)),
+    };
+    const current = sc.message.replace(/\{(\w+)\}/g, (_, key: string) => {
+      if (!(key in tokens)) throw new Error(`Unknown scenario placeholder: ${key}`);
+      return tokens[key];
+    });
+    const context = `For context, this is our ${plan} account in ${region}. We have used it for ${tenure} months, with a normal monthly spend of AUD ${spend}. The contact history shows ${priorContacts} earlier contacts in the last 30 days, some on separate matters. Our internal reference for this update is SYN-${String(n + 1).padStart(4, '0')}.`;
+    const deadline = timing[sc.urgency][variant % 2];
+    const closing = followup[variant % followup.length];
+    let message: string;
+    if (channel === 'chat') {
+      message = `Customer: ${history[variant]}\n\nAgent: Thanks. What is happening now, and what have you already checked?\n\nCustomer: ${current}\n\nAgent: Can you confirm the account context and the timing?\n\nCustomer: ${context} ${deadline}\n\nCustomer: ${closing}`;
+    } else if (channel === 'call_transcript') {
+      message = `Agent: I have the earlier reference. Could you explain the situation in your own words?\n\nCaller: ${history[variant]}\n\nCaller: ${current}\n\nAgent: Let me check the background before I pass this on.\n\nCaller: ${context}\n\nAgent: When do you need the next step?\n\nCaller: ${deadline}\n\nCaller: ${closing}`;
+    } else {
+      message = `Hello,\n\n${history[variant]}\n\n${context}\n\nLatest update: ${current}\n\n${deadline}\n\n${closing}\n\nPlease reply under the existing case reference so the next colleague can follow the history.`;
+    }
+    if (variant >= 7) {
+      message += '\n\nAdditional handover note: Our colleague copied the first summary into a separate tracking sheet before this update was written. That sheet may still show the old wording. We have asked them to attach this latest message instead of opening another case, and to leave the completed items marked as completed. If your reply is forwarded internally, please keep the current explanation and the earlier closed history together so the distinction is not lost again.';
+    }
+    data.push({
+      id: `CC-${String(n + 1).padStart(3, '0')}`,
+      channel, subject: `${sc.subject} — follow-up ${variant + 1}`, message,
+      metadata: {
+        customerTenureMonths: tenure, plan, monthlySpendAud: spend,
+        priorContacts30d: priorContacts,
+        accountAgeDays: Math.max(30, tenure * 30 + ((s * 17 + variant) % 29)), region,
+      },
+      groundTruth: {
+        route: sc.route, urgency: sc.urgency, churnRisk: sc.churnRisk,
+        fraudRisk: sc.fraudRisk, humanEscalation: sc.humanEscalation,
+        customerValue: valueTier(spend, tenure, plan),
+      },
+    });
+  }
+}
+
+if (challengeScenarios.length !== 90 || data.length !== 1000) {
+  throw new Error(`Expected 90 challenge narratives and 1,000 interactions, got ${challengeScenarios.length} and ${data.length}.`);
+}
+if (new Set(data.map(x => x.id)).size !== data.length || new Set(data.map(x => x.message)).size !== data.length) {
+  throw new Error('Dataset contains duplicate IDs or identical messages.');
 }
 
 const out = path.resolve('data/interactions.json');

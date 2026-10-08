@@ -1,6 +1,6 @@
 # Jev Contact Centre POC
 
-A small evaluation workbench for TypeSafe Jev. It ships with **100 synthetic, labelled contact-centre interactions**, an official Jev SDK adapter, an optional conventional LLM comparator, evaluation metrics, tests, and a local browser UI.
+A small evaluation workbench for TypeSafe Jev. It ships with **1,000 synthetic, labelled contact-centre interactions**, an official Jev SDK adapter, an optional conventional LLM comparator, evaluation metrics, tests, and a local browser UI.
 
 ## What this tests
 
@@ -47,7 +47,7 @@ npm run dev
 
 Open the Vite URL shown in the terminal (normally `http://localhost:5173`). The UI lets you:
 
-- browse all 100 labelled interactions
+- browse all 1,000 labelled interactions
 - edit the interaction text before running it
 - run Jev
 - optionally run the conventional LLM comparator
@@ -73,7 +73,7 @@ Both configured providers:
 npm run evaluate
 ```
 
-Results are written to `results/` as detailed JSONL plus a summary JSON. The evaluator reports:
+The evaluator runs all 1,000 records in `data/interactions.json`. Results are written to `results/` as detailed JSONL plus a summary JSON, overwriting the previous run. The evaluator reports:
 
 - accuracy for route, urgency, churn, fraud, customer value and escalation
 - binary F1 for human escalation
@@ -119,14 +119,22 @@ Update this environment variable if TypeSafe pricing changes.
 - `data/interactions.json` — human-readable array
 - `data/interactions.jsonl` — one case per line
 - `scripts/generate-data.ts` — deterministic regeneration script
+- `scripts/challenge-scenarios.ts` — 90 authored challenge narratives and their labels
 
-The 100 cases cover billing, technical support, cancellations/retention, fraud/security, account access, complaints, refunds, product information and general service. Twenty cases are technical to increase variation across outages, integrations, API failures and lower-severity product bugs.
+The 1,000 cases cover billing, technical support, cancellations/retention, fraud/security, account access, complaints, refunds, product information and general service. There are 120 technical cases and 110 for each other routing team, across chat, email and call-transcript text.
+
+- **CC-001–CC-100:** the original 100 short cases, preserved unchanged for baseline comparisons.
+- **CC-101–CC-1000:** 900 longer cases generated from 90 new narratives, with ten deterministic variants of each. They include multi-turn conversations, resolved issues in forwarded history, misleading subjects, competing issues, negation, changing context and differing time sensitivity. Some include an extended handover note.
+
+Variants change account metadata, amounts, timing/context wording and conversation format. They share underlying scenario narratives, so these are not 900 independent customer situations. Keep variants from the same narrative together if making train/test splits; otherwise near-duplicate cases can leak across the split. Ground-truth routing follows the current unresolved request, rather than resolved historical topics. Other labels are authored for that request; customer value follows the generator's spend/tenure rules.
+
+Regenerate both dataset formats with `npm run generate`. This overwrites dataset edits. The larger and longer benchmark will use more API tokens and may take longer than the original 100-case run.
 
 The labels are synthetic ground truth, not claims about a real organisation's operating policy. Change both the question criteria and labels to reflect your own routing/escalation policy before treating the evaluation as production evidence.
 
 ## Useful experiment sequence
 
-1. Run the untouched 100-case benchmark.
+1. Run the 1,000-case benchmark and compare the original first 100 cases with the 900 added cases using the detailed results.
 2. Review disagreements, especially borderline billing-vs-refund and access-vs-security cases.
 3. Change only the Jev question criteria and rerun. No model retraining is required.
 4. Add a conventional LLM comparator and compare accuracy, calibration, latency and cost.
@@ -139,4 +147,4 @@ The labels are synthetic ground truth, not claims about a real organisation's op
 npm test
 ```
 
-Tests cover metric calculations and validation of the comparator's structured decision schema.
+Tests cover dataset integrity, metric calculations and validation of the comparator's structured decision schema.

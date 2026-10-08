@@ -13,5 +13,9 @@ const valid = {
 describe('decision schema',()=>{
   it('accepts a valid decision',()=> expect(decisionOutputSchema.parse(valid).route).toBe('billing'));
   it('rejects invalid enums',()=> expect(()=>decisionOutputSchema.parse({...valid,route:'made_up'})).toThrow());
+  it('rejects a missing probability category',()=> {
+    const { critical: _critical, ...incomplete } = valid.urgencyProbabilities;
+    expect(()=>decisionOutputSchema.parse({...valid,urgencyProbabilities:incomplete})).toThrow();
+  });
   it('checks probability sums',()=> expect(approximatelySumsToOne(valid.urgencyProbabilities)).toBe(true));
 });

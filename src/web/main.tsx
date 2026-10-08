@@ -40,7 +40,7 @@ function App(){
   }
   if(!draft)return <div className="loading">Loading…</div>;
   return <main>
-    <header><div><h1>Jev Contact Centre Lab</h1><p>100 labelled synthetic interactions · edit state · compare typed decisions.</p></div><div className="status"><span className={health?.jevConfigured?'ok':'off'}>Jev {health?.jevConfigured?'ready':'no key'}</span><span className={health?.llmConfigured?'ok':'off'}>LLM {health?.llmConfigured?'ready':'optional'}</span></div></header>
+    <header><div><h1>Jev Contact Centre Lab</h1><p>{items.length.toLocaleString()} labelled synthetic interactions · edit state · compare typed decisions.</p></div><div className="status"><span className={health?.jevConfigured?'ok':'off'}>Jev {health?.jevConfigured?'ready':'no key'}</span><span className={health?.llmConfigured?'ok':'off'}>LLM {health?.llmConfigured?'ready':'optional'}</span></div></header>
     <div className="layout">
       <aside><label>Interaction</label><select value={index} onChange={e=>choose(Number(e.target.value))}>{items.map((x,i)=><option key={x.id} value={i}>{x.id} · {x.groundTruth.route} · {x.subject}</option>)}</select>
         <div className="truth"><h3>Ground truth</h3>{gt&&Object.entries(gt).map(([k,v])=><div key={k}><span>{k}</span><b>{String(v)}</b></div>)}</div>
