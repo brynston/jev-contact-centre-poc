@@ -1,5 +1,6 @@
-import type { ContactCentreInteraction, ProviderResult } from '../../shared/types.js';
+import type { ContactCentreInteraction, LlmOptions, ProviderResult } from '../../shared/types.js';
 import { decisionOutputSchema } from '../../shared/schema.js';
+import { getLlmConfig } from './llm-config.js';
 
 const schemaPrompt = `Return ONLY valid JSON with exactly this shape:
 {
@@ -18,35 +19,35 @@ const schemaPrompt = `Return ONLY valid JSON with exactly this shape:
 }
 All probability maps must sum to approximately 1. Use only the supplied interaction and metadata.`;
 
-export async function runLlm(interaction: ContactCentreInteraction): Promise<ProviderResult> {
-  const key = process.env.LLM_API_KEY;
-  if (!key) throw new Error('LLM_API_KEY is not set. Comparator is optional; add it to .env to use it.');
-  const base = (process.env.LLM_BASE_URL || 'https://api.openai.com/v1').replace(/\/$/, '');
-  const model = process.env.LLM_MODEL || 'gpt-5-mini';
+export async function runLlm(interaction: ContactCentreInteraction, options: LlmOptions = {}): Promise<ProviderResult> {
+  const config = getLlmConfig(options);
+  const { key, model } = config;
+  if (!key) throw new Error(`${config.keySetting} is not set. Add it to .env to use the ${config.mode} comparator.`);
 
   const started = performance.now();
-  const res = await fetch(`${base}/chat/completions`, {
+  const res = await fetch(`${config.baseUrl}/chat/completions`, {
     method: 'POST',
     headers: { 'Authorization': `Bearer ${key}`, 'Content-Type': 'application/json' },
     body: JSON.stringify({
       model,
       messages: [
         { role: 'system', content: 'You are a contact-centre decision classifier. ' + schemaPrompt },
-        { role: 'user', content: JSON.stringify(interaction) }
+        { role: 'user', content: JSON.stringify({ channel: interaction.channel, subject: interaction.subject, message: interaction.message, metadata: interaction.metadata }) }
       ]
     })
   });
   const latencyMs = performance.now() - started;
-  if (!res.ok) throw new Error(`LLM provider returned ${res.status}: ${await res.text()}`);
+  // Do not relay upstream response bodies, which may contain credentials or request details.
+  if (!res.ok) throw new Error(`${config.mode} LLM provider returned HTTP ${res.status}. Check server-side credentials, credits and model access.`);
   const body: any = await res.json();
-  const text = body.choices?.[0]?.message?.content ?? '';
+  if (body.error) throw new Error(`${config.mode} LLM provider returned an API error. Check model access and provider settings.`);
+  const text = body.choices?.[0]?.message?.content;
+  if (typeof text !== 'string' || !text.trim()) throw new Error(`${config.mode} LLM provider returned no text content.`);
   const cleaned = text.replace(/^```json\s*/i, '').replace(/```$/,'').trim();
   const output = decisionOutputSchema.parse(JSON.parse(cleaned));
   const inputTokens = body.usage?.prompt_tokens;
   const outputTokens = body.usage?.completion_tokens;
-  const inRate = Number(process.env.LLM_INPUT_COST_PER_MILLION || 0);
-  const outRate = Number(process.env.LLM_OUTPUT_COST_PER_MILLION || 0);
-  const estimatedCostUsd = ((inputTokens || 0) * inRate + (outputTokens || 0) * outRate) / 1_000_000;
+  const estimatedCostUsd = ((inputTokens || 0) * config.inputRate + (outputTokens || 0) * config.outputRate) / 1_000_000;
 
-  return { provider: 'llm', model, output, latencyMs, inputTokens, outputTokens, estimatedCostUsd, raw: body };
+  return { provider: 'llm', llmMode: config.mode, model, output, latencyMs, inputTokens, outputTokens, estimatedCostUsd };
 }

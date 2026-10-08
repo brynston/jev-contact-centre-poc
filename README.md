@@ -19,7 +19,7 @@ Ground-truth labels are included so you can measure classification accuracy and 
 
 - Node.js 20+
 - A TypeSafe API key for live Jev calls
-- Optional: an OpenAI-compatible API key for the LLM comparator
+- Optional: an OpenAI / OpenAI-compatible key, or an OpenRouter key for the LLM comparator
 
 The project uses the official `@typesafe-ai/sdk` package and defaults to `jev-latest`.
 
@@ -50,7 +50,8 @@ Open the Vite URL shown in the terminal (normally `http://localhost:5173`). The 
 - browse all 1,000 labelled interactions
 - edit the interaction text before running it
 - run Jev
-- optionally run the conventional LLM comparator
+- toggle the conventional comparator between **Direct APIs** and **OpenRouter**
+- choose a suggested model or type a custom model ID, then run the comparator
 - inspect probabilities, latency, tokens and estimated cost side-by-side
 
 ## Run the full evaluation
@@ -73,7 +74,7 @@ Both configured providers:
 npm run evaluate
 ```
 
-The evaluator runs all 1,000 records in `data/interactions.json`. Results are written to `results/` as detailed JSONL plus a summary JSON, overwriting the previous run. The evaluator reports:
+The evaluator runs all 1,000 records in `data/interactions.json`. Results are written to `results/` as detailed JSONL plus a summary JSON: `jev-*`, `llm-direct-*`, and `llm-openrouter-*`. A rerun overwrites the previous run for that mode, while preserving the other mode. Comparator rows and summaries record the mode and requested model. The evaluator reports:
 
 - accuracy for route, urgency, churn, fraud, customer value and escalation
 - binary F1 for human escalation
@@ -92,17 +93,56 @@ CONCURRENCY=10 npm run evaluate:jev
 
 ## LLM comparator
 
-The comparator intentionally uses a generic OpenAI-compatible `/chat/completions` endpoint so you can point it at many providers.
+The comparator supports two independent server-side paths using Chat Completions:
 
-```bash
-LLM_API_KEY=...
+- **Direct APIs** (the default): OpenAI, or another OpenAI-compatible endpoint configured in `LLM_BASE_URL`.
+- **OpenRouter**: its own key and endpoint, with provider-prefixed model IDs. See the [OpenRouter quickstart](https://openrouter.ai/docs/quickstart) and [model catalog](https://openrouter.ai/models).
+
+In your repository-root `.env`, configure either or both:
+
+```dotenv
+LLM_PROVIDER_MODE=direct
+
+# Direct APIs: existing LLM_* settings remain supported.
+LLM_API_KEY=your_direct_key
+# Alternatively set OPENAI_API_KEY; LLM_API_KEY takes precedence if both are set.
 LLM_BASE_URL=https://api.openai.com/v1
 LLM_MODEL=gpt-5-mini
+LLM_MODELS=gpt-5-mini,gpt-4.1-mini
+
+OPENROUTER_API_KEY=your_openrouter_key
+OPENROUTER_BASE_URL=https://openrouter.ai/api/v1
+OPENROUTER_MODEL=openai/gpt-5-mini
+OPENROUTER_MODELS=openai/gpt-5-mini,openai/gpt-4.1-mini
+
 LLM_INPUT_COST_PER_MILLION=0
 LLM_OUTPUT_COST_PER_MILLION=0
+OPENROUTER_INPUT_COST_PER_MILLION=0
+OPENROUTER_OUTPUT_COST_PER_MILLION=0
 ```
 
-Set the two cost values for the model you choose if you want meaningful cost comparison numbers.
+`LLM_PROVIDER_MODE` sets the initial UI selection and the evaluator default. Both modes can be configured at once; switching the UI does not change Jev. `LLM_MODEL` and `OPENROUTER_MODEL` set separate defaults. Optional comma-separated `*_MODELS` lists provide suggestions; the model field also accepts a custom ID. Availability depends on your provider/account. Changing the mode or model clears the previous comparator result. Controls are locked while a request is running.
+
+Restart `npm run dev` after changing `.env`. The selected comparator shows whether its server-side key is configured; the run button is disabled without that key. Only the mode and model ID travel from the browser. Keys and base URLs stay on the server, and health responses contain only readiness flags and model suggestions. Never use `VITE_*` variables for credentials. `.env` is ignored by Git.
+
+No forced `temperature` or other model-specific sampling parameters are sent. Parameter support varies by model; see the [OpenAI Chat Completions reference](https://developers.openai.com/api/reference/resources/chat/subresources/completions/methods/create). Outputs must pass the existing decision schema; invalid JSON, missing content and API failures count as evaluation failures. Ground-truth labels are kept out of the comparator prompt.
+
+Evaluation examples (both modes use the same `PROVIDERS=llm` comparator):
+
+```bash
+# Explicit CLI selection; flags override LLM_PROVIDER_MODE and the default model.
+npm run evaluate:llm -- --llm-mode direct --llm-model gpt-5-mini
+npm run evaluate:llm -- --llm-mode openrouter --llm-model openai/gpt-5-mini
+
+# Environment selection, with Jev included if configured.
+LLM_PROVIDER_MODE=openrouter npm run evaluate
+```
+
+A missing key skips only the selected provider; it never falls back to a different mode. Invalid mode names, provider names, CLI options or concurrency fail immediately. Each live full evaluation sends 1,000 requests per selected provider.
+
+The API remains compatible with existing `POST /api/run/llm` callers that send an interaction as the JSON body. To override the server defaults, use `POST /api/run/llm?mode=openrouter&model=openai%2Fgpt-5-mini`. Jev continues to use `POST /api/run/jev`.
+
+Set the cost rates separately for each mode and update them when you change models. These are rough user-supplied estimates per million tokens, not billed costs; zero means no cost estimate has been configured.
 
 ## Jev pricing assumption
 
@@ -147,4 +187,6 @@ The labels are synthetic ground truth, not claims about a real organisation's op
 npm test
 ```
 
-Tests cover dataset integrity, metric calculations and validation of the comparator's structured decision schema.
+Tests cover dataset integrity, metrics, decision validation, provider selection, credential isolation, API routing, and evaluation output. Provider/API tests use mocks and offline fixtures, so no live keys or credits are needed.
+
+Run `npm run build` for TypeScript checks and the production frontend build.

@@ -5,10 +5,10 @@ import type { ContactCentreInteraction, ProviderResult } from '../src/shared/typ
 import { runJev } from '../src/server/providers/jev.js';
 import { runLlm } from '../src/server/providers/llm.js';
 import { summarise } from '../src/server/metrics.js';
+import { getEvaluationOptions } from './evaluation-options.js';
 
+const { selected, concurrency, llm } = getEvaluationOptions();
 const interactions = JSON.parse(await fs.readFile(path.resolve('data/interactions.json'),'utf8')) as ContactCentreInteraction[];
-const selected = (process.env.PROVIDERS || 'jev,llm').split(',').map(x=>x.trim()).filter(Boolean) as Array<'jev'|'llm'>;
-const concurrency = Math.max(1, Number(process.env.CONCURRENCY || 5));
 
 async function mapLimit<T,R>(items:T[], limit:number, fn:(item:T,index:number)=>Promise<R>):Promise<R[]> {
   const out = new Array<R>(items.length);
@@ -22,13 +22,14 @@ async function mapLimit<T,R>(items:T[], limit:number, fn:(item:T,index:number)=>
 
 for (const provider of selected) {
   if (provider==='jev' && !process.env.TYPESAFE_API_KEY) { console.log('Skipping Jev: TYPESAFE_API_KEY is not set.'); continue; }
-  if (provider==='llm' && !process.env.LLM_API_KEY) { console.log('Skipping LLM comparator: LLM_API_KEY is not set.'); continue; }
+  if (provider==='llm' && !llm.key) { console.log(`Skipping ${llm.mode} LLM comparator: ${llm.keySetting} is not set.`); continue; }
 
-  console.log(`Evaluating ${provider} on ${interactions.length} interactions (concurrency ${concurrency})...`);
+  const resultName = provider === 'llm' ? `llm-${llm.mode}` : 'jev';
+  console.log(`Evaluating ${resultName}${provider === 'llm' ? ` (${llm.model})` : ''} on ${interactions.length} interactions (concurrency ${concurrency})...`);
   let failures = 0;
   const rows = await mapLimit(interactions,concurrency,async (interaction,i) => {
     try {
-      const result = provider==='jev' ? await runJev(interaction) : await runLlm(interaction);
+      const result = provider==='jev' ? await runJev(interaction) : await runLlm(interaction, { mode: llm.mode, model: llm.model });
       process.stdout.write(`\r${provider}: ${i+1}/${interactions.length}`);
       return { interaction, result, error:null as string|null };
     } catch (e:any) {
@@ -40,9 +41,9 @@ for (const provider of selected) {
   const successful = rows.filter(r=>r.result).map(r=>r.result!) as ProviderResult[];
   const successfulInteractions = rows.filter(r=>r.result).map(r=>r.interaction);
   const summary = successful.length ? summarise(successfulInteractions,successful) : null;
-  const report = { provider, attempted:interactions.length, successful:successful.length, failures, invalidOutputRate:failures/interactions.length, summary };
+  const report = { provider, ...(provider === 'llm' ? { llmMode: llm.mode, model: llm.model } : {}), attempted:interactions.length, successful:successful.length, failures, invalidOutputRate:failures/interactions.length, summary };
   await fs.mkdir('results',{recursive:true});
-  await fs.writeFile(`results/${provider}-results.jsonl`, rows.map(r=>JSON.stringify(r)).join('\n')+'\n');
-  await fs.writeFile(`results/${provider}-summary.json`, JSON.stringify(report,null,2)+'\n');
+  await fs.writeFile(`results/${resultName}-results.jsonl`, rows.map(r=>JSON.stringify(r)).join('\n')+'\n');
+  await fs.writeFile(`results/${resultName}-summary.json`, JSON.stringify(report,null,2)+'\n');
   console.log(JSON.stringify(report,null,2));
 }

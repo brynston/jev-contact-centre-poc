@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import type { ContactCentreInteraction, ProviderResult } from '../shared/types';
+import type { ApiHealth, ContactCentreInteraction, LlmMode, ProviderResult } from '../shared/types';
 import './styles.css';
 
 function ProbList({values}:{values:Record<string,number>}){
@@ -23,35 +23,55 @@ function ResultCard({title,result,error}:{title:string,result?:ProviderResult,er
 }
 
 function App(){
+  const [loadError,setLoadError]=useState('');
   const [items,setItems]=useState<ContactCentreInteraction[]>([]);
   const [index,setIndex]=useState(0);
   const [draft,setDraft]=useState<ContactCentreInteraction|null>(null);
-  const [health,setHealth]=useState<any>(null);
+  const [health,setHealth]=useState<ApiHealth|null>(null);
+  const [llmMode,setLlmMode]=useState<LlmMode>('direct');
+  const [models,setModels]=useState<Record<LlmMode,string>>({direct:'',openrouter:''});
   const [jev,setJev]=useState<ProviderResult>(); const [llm,setLlm]=useState<ProviderResult>();
   const [jevErr,setJevErr]=useState(''); const [llmErr,setLlmErr]=useState(''); const [busy,setBusy]=useState('');
 
-  useEffect(()=>{ Promise.all([fetch('/api/interactions').then(r=>r.json()),fetch('/api/health').then(r=>r.json())]).then(([x,h])=>{setItems(x);setDraft(x[0]);setHealth(h);}); },[]);
+  useEffect(()=>{ Promise.all(['/api/interactions','/api/health'].map(async url=>{const r=await fetch(url);const body=await r.json();if(!r.ok)throw new Error(body.error||'Unable to load the workbench.');return body;})).then(([x,h])=>{setItems(x);setDraft(x[0]);setHealth(h);setLlmMode(h.llm.defaultMode);setModels({direct:h.llm.direct.model,openrouter:h.llm.openrouter.model});}).catch(e=>setLoadError(e.message)); },[]);
   const gt=useMemo(()=>draft?.groundTruth,[draft]);
   function choose(i:number){setIndex(i);setDraft(structuredClone(items[i]));setJev(undefined);setLlm(undefined);setJevErr('');setLlmErr('');}
+  function selectMode(mode:LlmMode){setLlmMode(mode);setLlm(undefined);setLlmErr('');}
+  function selectModel(model:string){setModels({...models,[llmMode]:model});setLlm(undefined);setLlmErr('');}
+  const comparatorName=llmMode==='openrouter'?'OpenRouter':'Direct APIs';
+  const comparatorReady=health?.llm[llmMode].configured;
   async function run(provider:'jev'|'llm'){
     if(!draft)return; setBusy(provider); provider==='jev'?setJevErr(''):setLlmErr('');
-    try{ const r=await fetch(`/api/run/${provider}`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(draft)}); const body=await r.json(); if(!r.ok) throw new Error(body.error||'Request failed'); provider==='jev'?setJev(body):setLlm(body); }
+    const query=provider==='llm'?`?${new URLSearchParams({mode:llmMode,model:models[llmMode].trim()})}`:'';
+    try{ const r=await fetch(`/api/run/${provider}${query}`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(draft)}); const body=await r.json(); if(!r.ok) throw new Error(body.error||'Request failed'); provider==='jev'?setJev(body):setLlm(body); }
     catch(e:any){provider==='jev'?setJevErr(e.message):setLlmErr(e.message)} finally{setBusy('')}
   }
+  if(loadError)return <div className="loading error" role="alert">{loadError}</div>;
   if(!draft)return <div className="loading">Loading…</div>;
   return <main>
-    <header><div><h1>Jev Contact Centre Lab</h1><p>{items.length.toLocaleString()} labelled synthetic interactions · edit state · compare typed decisions.</p></div><div className="status"><span className={health?.jevConfigured?'ok':'off'}>Jev {health?.jevConfigured?'ready':'no key'}</span><span className={health?.llmConfigured?'ok':'off'}>LLM {health?.llmConfigured?'ready':'optional'}</span></div></header>
+    <header><div><h1>Jev Contact Centre Lab</h1><p>{items.length.toLocaleString()} labelled synthetic interactions · edit state · compare typed decisions.</p></div><div className="status"><span className={health?.jevConfigured?'ok':'off'}>Jev {health?.jevConfigured?'ready':'no key'}</span><span className={comparatorReady?'ok':'off'}>{comparatorName} {comparatorReady?'ready':'no key'}</span></div></header>
     <div className="layout">
-      <aside><label>Interaction</label><select value={index} onChange={e=>choose(Number(e.target.value))}>{items.map((x,i)=><option key={x.id} value={i}>{x.id} · {x.groundTruth.route} · {x.subject}</option>)}</select>
+      <aside><label>Interaction</label><select disabled={!!busy} value={index} onChange={e=>choose(Number(e.target.value))}>{items.map((x,i)=><option key={x.id} value={i}>{x.id} · {x.groundTruth.route} · {x.subject}</option>)}</select>
         <div className="truth"><h3>Ground truth</h3>{gt&&Object.entries(gt).map(([k,v])=><div key={k}><span>{k}</span><b>{String(v)}</b></div>)}</div>
       </aside>
       <section className="editor card"><div className="grid2"><div><label>Subject</label><input value={draft.subject} onChange={e=>setDraft({...draft,subject:e.target.value})}/></div><div><label>Channel</label><select value={draft.channel} onChange={e=>setDraft({...draft,channel:e.target.value as any})}><option>chat</option><option>email</option><option>call_transcript</option></select></div></div>
         <label>Interaction text</label><textarea value={draft.message} onChange={e=>setDraft({...draft,message:e.target.value})}/>
         <label>Metadata</label><pre>{JSON.stringify(draft.metadata,null,2)}</pre>
-        <div className="buttons"><button disabled={!!busy} onClick={()=>run('jev')}>{busy==='jev'?'Running…':'Run Jev'}</button><button className="secondary" disabled={!!busy} onClick={()=>run('llm')}>{busy==='llm'?'Running…':'Run LLM comparator'}</button></div>
+        <fieldset className="comparator" disabled={!!busy}>
+          <legend>Conventional LLM comparator</legend>
+          <div className="provider-toggle" role="group" aria-label="LLM provider mode">
+            <label><input type="radio" name="llm-mode" value="direct" checked={llmMode==='direct'} onChange={()=>selectMode('direct')}/> Direct APIs</label>
+            <label><input type="radio" name="llm-mode" value="openrouter" checked={llmMode==='openrouter'} onChange={()=>selectMode('openrouter')}/> OpenRouter</label>
+          </div>
+          <label htmlFor="llm-model">Model</label>
+          <input id="llm-model" list="llm-model-options" value={models[llmMode]} onChange={e=>selectModel(e.target.value)} placeholder={llmMode==='openrouter'?'provider/model-id':'model-id'}/>
+          <datalist id="llm-model-options">{health?.llm[llmMode].models.map(model=><option key={model} value={model}/>)}</datalist>
+          <p className="comparator-help">{llmMode==='openrouter'?'Use an OpenRouter model ID, including the provider prefix.':'Uses the server-configured direct OpenAI-compatible API.'} {comparatorReady?'Key configured on the server.':`Add ${llmMode==='openrouter'?'OPENROUTER_API_KEY':'LLM_API_KEY or OPENAI_API_KEY'} to .env and restart the server.`}</p>
+        </fieldset>
+        <div className="buttons"><button disabled={!!busy} onClick={()=>run('jev')}>{busy==='jev'?'Running…':'Run Jev'}</button><button className="secondary" disabled={!!busy||!comparatorReady||!models[llmMode].trim()} onClick={()=>run('llm')}>{busy==='llm'?'Running…':`Run ${comparatorName}`}</button></div>
       </section>
     </div>
-    <div className="results"><ResultCard title="Jev" result={jev} error={jevErr}/><ResultCard title="Conventional LLM" result={llm} error={llmErr}/></div>
+    <div className="results"><ResultCard title="Jev" result={jev} error={jevErr}/><ResultCard title={`Conventional LLM · ${comparatorName}`} result={llm} error={llmErr}/></div>
   </main>;
 }
 createRoot(document.getElementById('root')!).render(<React.StrictMode><App/></React.StrictMode>);

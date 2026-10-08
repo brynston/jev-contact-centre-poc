@@ -46,8 +46,26 @@ export interface DecisionOutput {
   customerValueProbabilities: Record<CustomerValue, number>;
 }
 
+export type LlmMode = 'direct' | 'openrouter';
+export interface LlmOptions {
+  mode?: LlmMode;
+  model?: string;
+}
+export interface PublicLlmConfig {
+  defaultMode: LlmMode;
+  direct: { configured: boolean; model: string; models: string[] };
+  openrouter: { configured: boolean; model: string; models: string[] };
+}
+export interface ApiHealth {
+  ok: boolean;
+  jevConfigured: boolean;
+  llmConfigured: boolean;
+  llm: PublicLlmConfig;
+}
+
 export interface ProviderResult {
   provider: 'jev' | 'llm';
+  llmMode?: LlmMode;
   model: string;
   output: DecisionOutput;
   latencyMs: number;
