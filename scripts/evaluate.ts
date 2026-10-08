@@ -41,7 +41,7 @@ for (const provider of selected) {
   const successful = rows.filter(r=>r.result).map(r=>r.result!) as ProviderResult[];
   const successfulInteractions = rows.filter(r=>r.result).map(r=>r.interaction);
   const summary = successful.length ? summarise(successfulInteractions,successful) : null;
-  const report = { provider, ...(provider === 'llm' ? { llmMode: llm.mode, model: llm.model } : {}), attempted:interactions.length, successful:successful.length, failures, invalidOutputRate:failures/interactions.length, summary };
+  const report = { provider, ...(provider === 'llm' ? { llmMode: llm.mode, llmApi: llm.api, model: llm.model } : {}), attempted:interactions.length, successful:successful.length, failures, invalidOutputRate:failures/interactions.length, summary };
   await fs.mkdir('results',{recursive:true});
   await fs.writeFile(`results/${resultName}-results.jsonl`, rows.map(r=>JSON.stringify(r)).join('\n')+'\n');
   await fs.writeFile(`results/${resultName}-summary.json`, JSON.stringify(report,null,2)+'\n');

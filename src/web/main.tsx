@@ -58,20 +58,21 @@ function App(){
         <label>Interaction text</label><textarea value={draft.message} onChange={e=>setDraft({...draft,message:e.target.value})}/>
         <label>Metadata</label><pre>{JSON.stringify(draft.metadata,null,2)}</pre>
         <fieldset className="comparator" disabled={!!busy}>
-          <legend>Conventional LLM comparator</legend>
+          <legend>Model comparator</legend>
           <div className="provider-toggle" role="group" aria-label="LLM provider mode">
             <label><input type="radio" name="llm-mode" value="direct" checked={llmMode==='direct'} onChange={()=>selectMode('direct')}/> Direct APIs</label>
             <label><input type="radio" name="llm-mode" value="openrouter" checked={llmMode==='openrouter'} onChange={()=>selectMode('openrouter')}/> OpenRouter</label>
           </div>
           <label htmlFor="llm-model">Model</label>
-          <input id="llm-model" list="llm-model-options" value={models[llmMode]} onChange={e=>selectModel(e.target.value)} placeholder={llmMode==='openrouter'?'provider/model-id':'model-id'}/>
-          <datalist id="llm-model-options">{health?.llm[llmMode].models.map(model=><option key={model} value={model}/>)}</datalist>
-          <p className="comparator-help">{llmMode==='openrouter'?'Use an OpenRouter model ID, including the provider prefix.':'Uses the server-configured direct OpenAI-compatible API.'} {comparatorReady?'Key configured on the server.':`Add ${llmMode==='openrouter'?'OPENROUTER_API_KEY':'LLM_API_KEY or OPENAI_API_KEY'} to .env and restart the server.`}</p>
+          <select id="llm-model" value={models[llmMode]} onChange={e=>selectModel(e.target.value)}>
+            {health?.llm[llmMode].models.map(model=><option key={model} value={model}>{model}</option>)}
+          </select>
+          <p className="comparator-help">{llmMode==='openrouter'?'Models come from OPENROUTER_MODELS in .env. Clef and Clef Flash use typed decisions automatically.':'Models come from LLM_MODELS in .env and use the server-configured direct API.'} {comparatorReady?'Key configured on the server.':`Add ${llmMode==='openrouter'?'OPENROUTER_API_KEY':'LLM_API_KEY or OPENAI_API_KEY'} to .env and restart the server.`}</p>
         </fieldset>
         <div className="buttons"><button disabled={!!busy} onClick={()=>run('jev')}>{busy==='jev'?'Running…':'Run Jev'}</button><button className="secondary" disabled={!!busy||!comparatorReady||!models[llmMode].trim()} onClick={()=>run('llm')}>{busy==='llm'?'Running…':`Run ${comparatorName}`}</button></div>
       </section>
     </div>
-    <div className="results"><ResultCard title="Jev" result={jev} error={jevErr}/><ResultCard title={`Conventional LLM · ${comparatorName}`} result={llm} error={llmErr}/></div>
+    <div className="results"><ResultCard title="Jev" result={jev} error={jevErr}/><ResultCard title={`Model comparator · ${comparatorName}`} result={llm} error={llmErr}/></div>
   </main>;
 }
 createRoot(document.getElementById('root')!).render(<React.StrictMode><App/></React.StrictMode>);

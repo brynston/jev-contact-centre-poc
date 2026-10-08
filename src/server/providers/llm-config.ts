@@ -19,12 +19,18 @@ export function getLlmConfig(options: LlmOptions = {}) {
   const prefix = openrouter ? 'OPENROUTER' : 'LLM';
   const defaultModel = process.env[`${prefix}_MODEL`]?.trim() || (openrouter ? 'openai/gpt-5-mini' : 'gpt-5-mini');
   const models = [...new Set([defaultModel, ...(process.env[`${prefix}_MODELS`] || '').split(',').map(x => x.trim()).filter(Boolean)])];
+  const model = selection.model ?? defaultModel;
+  const decisionModels = new Set(['cloudflare/clef', 'cloudflare/clef-flash', ...(process.env.OPENROUTER_DECISION_MODELS || '').split(',').map(x => x.trim()).filter(Boolean)]);
+  const api: 'decisions' | 'chat-completions' = openrouter && decisionModels.has(model.split(':')[0]) ? 'decisions' : 'chat-completions';
+  const baseUrl = (process.env[`${prefix}_BASE_URL`]?.trim() || (openrouter ? 'https://openrouter.ai/api/v1' : 'https://api.openai.com/v1')).replace(/\/+$/, '');
   return {
     mode,
     key: (openrouter ? process.env.OPENROUTER_API_KEY : process.env.LLM_API_KEY || process.env.OPENAI_API_KEY)?.trim(),
     keySetting: openrouter ? 'OPENROUTER_API_KEY' : 'LLM_API_KEY (or OPENAI_API_KEY)',
-    baseUrl: (process.env[`${prefix}_BASE_URL`]?.trim() || (openrouter ? 'https://openrouter.ai/api/v1' : 'https://api.openai.com/v1')).replace(/\/+$/, ''),
-    model: selection.model ?? defaultModel,
+    baseUrl,
+    decisionsUrl: process.env.OPENROUTER_DECISIONS_URL?.trim() || `${baseUrl.replace(/\/v1$/, '')}/alpha/decisions`,
+    api,
+    model,
     models,
     inputRate: Number(process.env[`${prefix}_INPUT_COST_PER_MILLION`] || 0),
     outputRate: Number(process.env[`${prefix}_OUTPUT_COST_PER_MILLION`] || 0)

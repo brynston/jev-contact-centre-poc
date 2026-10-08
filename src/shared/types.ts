@@ -66,6 +66,7 @@ export interface ApiHealth {
 export interface ProviderResult {
   provider: 'jev' | 'llm';
   llmMode?: LlmMode;
+  llmApi?: 'chat-completions' | 'decisions';
   model: string;
   output: DecisionOutput;
   latencyMs: number;

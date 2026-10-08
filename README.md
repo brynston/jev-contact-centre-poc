@@ -51,7 +51,7 @@ Open the Vite URL shown in the terminal (normally `http://localhost:5173`). The 
 - edit the interaction text before running it
 - run Jev
 - toggle the conventional comparator between **Direct APIs** and **OpenRouter**
-- choose a suggested model or type a custom model ID, then run the comparator
+- select any configured model from the dropdown, including Clef and Clef Flash via OpenRouter
 - inspect probabilities, latency, tokens and estimated cost side-by-side
 
 ## Run the full evaluation
@@ -93,10 +93,10 @@ CONCURRENCY=10 npm run evaluate:jev
 
 ## LLM comparator
 
-The comparator supports two independent server-side paths using Chat Completions:
+The comparator supports two independent server-side paths:
 
 - **Direct APIs** (the default): OpenAI, or another OpenAI-compatible endpoint configured in `LLM_BASE_URL`.
-- **OpenRouter**: its own key and endpoint, with provider-prefixed model IDs. See the [OpenRouter quickstart](https://openrouter.ai/docs/quickstart) and [model catalog](https://openrouter.ai/models).
+- **OpenRouter**: its own key and endpoints, with provider-prefixed model IDs. Chat models use Chat Completions; Clef and Clef Flash automatically use the Decisions API. See the [OpenRouter quickstart](https://openrouter.ai/docs/quickstart) and [model catalog](https://openrouter.ai/models).
 
 In your repository-root `.env`, configure either or both:
 
@@ -113,7 +113,7 @@ LLM_MODELS=gpt-5-mini,gpt-4.1-mini
 OPENROUTER_API_KEY=your_openrouter_key
 OPENROUTER_BASE_URL=https://openrouter.ai/api/v1
 OPENROUTER_MODEL=openai/gpt-5-mini
-OPENROUTER_MODELS=openai/gpt-5-mini,openai/gpt-4.1-mini
+OPENROUTER_MODELS=openai/gpt-5-mini,cloudflare/clef,cloudflare/clef-flash
 
 LLM_INPUT_COST_PER_MILLION=0
 LLM_OUTPUT_COST_PER_MILLION=0
@@ -121,9 +121,9 @@ OPENROUTER_INPUT_COST_PER_MILLION=0
 OPENROUTER_OUTPUT_COST_PER_MILLION=0
 ```
 
-`LLM_PROVIDER_MODE` sets the initial UI selection and the evaluator default. Both modes can be configured at once; switching the UI does not change Jev. `LLM_MODEL` and `OPENROUTER_MODEL` set separate defaults. Optional comma-separated `*_MODELS` lists provide suggestions; the model field also accepts a custom ID. Availability depends on your provider/account. Changing the mode or model clears the previous comparator result. Controls are locked while a request is running.
+`LLM_PROVIDER_MODE` sets the initial UI selection and the evaluator default. Both modes can be configured at once; switching the UI does not change Jev. `LLM_MODEL` and `OPENROUTER_MODEL` set separate defaults. Comma-separated `LLM_MODELS` and `OPENROUTER_MODELS` lists populate the model dropdown for each mode. Every configured ID is selectable, duplicate/empty entries are removed, and the default model is always included. To add another model, add its ID to the relevant list and restart the app. Availability depends on your provider/account. Changing the mode or model clears the previous comparator result. Controls are locked while a request is running.
 
-Restart `npm run dev` after changing `.env`. The selected comparator shows whether its server-side key is configured; the run button is disabled without that key. Only the mode and model ID travel from the browser. Keys and base URLs stay on the server, and health responses contain only readiness flags and model suggestions. Never use `VITE_*` variables for credentials. `.env` is ignored by Git.
+Restart `npm run dev` after changing `.env`. The selected comparator shows whether its server-side key is configured; the run button is disabled without that key. Only the mode and model ID travel from the browser. Keys and base URLs stay on the server, and health responses contain only readiness flags and model lists. Never use `VITE_*` variables for credentials. `.env` is ignored by Git.
 
 No forced `temperature` or other model-specific sampling parameters are sent. Parameter support varies by model; see the [OpenAI Chat Completions reference](https://developers.openai.com/api/reference/resources/chat/subresources/completions/methods/create). Outputs must pass the existing decision schema; invalid JSON, missing content and API failures count as evaluation failures. Ground-truth labels are kept out of the comparator prompt.
 
@@ -142,7 +142,35 @@ A missing key skips only the selected provider; it never falls back to a differe
 
 The API remains compatible with existing `POST /api/run/llm` callers that send an interaction as the JSON body. To override the server defaults, use `POST /api/run/llm?mode=openrouter&model=openai%2Fgpt-5-mini`. Jev continues to use `POST /api/run/jev`.
 
-Set the cost rates separately for each mode and update them when you change models. These are rough user-supplied estimates per million tokens, not billed costs; zero means no cost estimate has been configured.
+OpenRouter’s reported `usage.cost` is used when available. Otherwise, costs use the configured per-million-token rates for the selected mode; update those rates when changing models. A fallback estimate of zero means no rates have been configured.
+
+## Clef and Clef Flash through OpenRouter
+
+Set these in `.env` to start with Clef Flash and offer both Clef variants plus a chat model:
+
+```dotenv
+LLM_PROVIDER_MODE=openrouter
+OPENROUTER_API_KEY=your_openrouter_key
+OPENROUTER_MODEL=cloudflare/clef-flash
+OPENROUTER_MODELS=cloudflare/clef,cloudflare/clef-flash,openai/gpt-5-mini
+```
+
+Restart `npm run dev`, select **OpenRouter**, then pick a model from the dropdown. Clef (`cloudflare/clef`) and Clef Flash (`cloudflare/clef-flash`) use `POST https://openrouter.ai/api/alpha/decisions` with the same six typed questions and customer state used by Jev. Returned choice probabilities and the human-escalation probability are validated and mapped into the existing results and metrics. Ground-truth labels are never sent. Direct Jev continues to use its existing SDK and TypeSafe key.
+
+Other configured OpenRouter models use Chat Completions by default. For another model that supports Decisions, add its base ID to `OPENROUTER_DECISION_MODELS` (a comma-separated list); this extends the built-in Clef IDs. Model variants such as `cloudflare/clef:nitro` are recognized by their base ID. The dropdown lists models rather than discovering the provider’s entire catalog; selecting a model does not guarantee your account has access to it.
+
+With a custom `OPENROUTER_BASE_URL`, the Decisions URL replaces the trailing `/v1` with `/alpha/decisions`. Set `OPENROUTER_DECISIONS_URL` to a full endpoint URL if your proxy uses a different path. Both endpoints and credentials remain server-side.
+
+Evaluate either Clef variant with the same script:
+
+```bash
+npm run evaluate:llm -- --llm-mode openrouter --llm-model cloudflare/clef
+npm run evaluate:llm -- --llm-mode openrouter --llm-model cloudflare/clef-flash
+```
+
+Reports record whether Chat Completions or Decisions was used. Runs still overwrite the previous report for that provider mode, so copy the result files before comparing multiple models.
+
+Cloudflare’s current Workers AI implementation reads roughly the first 2,000 tokens of text state and silently drops later text. Keep that limit in mind when editing longer interactions. See the [Decisions API reference](https://openrouter.ai/docs/api/api-reference/alphadecisions/submit-a-decisions-request) and [Clef input limits](https://openrouter.ai/docs/guides/community/multimodal-decisions).
 
 ## Jev pricing assumption
 

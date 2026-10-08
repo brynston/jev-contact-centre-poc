@@ -17,3 +17,16 @@ export const completion = {
   choices: [{ message: { content: JSON.stringify(output) } }],
   usage: { prompt_tokens: 100, completion_tokens: 50 }
 };
+
+export const decisionsCompletion = {
+  model: 'cloudflare/clef-flash',
+  answers: {
+    route: { type: 'choice', choice: output.route, probabilities: output.routeProbabilities },
+    urgency: { type: 'choice', choice: output.urgency, probabilities: output.urgencyProbabilities },
+    churnRisk: { type: 'choice', choice: output.churnRisk, probabilities: output.churnProbabilities },
+    fraudRisk: { type: 'choice', choice: output.fraudRisk, probabilities: output.fraudProbabilities },
+    humanEscalation: { type: 'noul', noul: output.humanEscalationProbability },
+    customerValue: { type: 'choice', choice: output.customerValue, probabilities: output.customerValueProbabilities }
+  },
+  usage: { input_tokens: 100, output_tokens: 0, cost: .0000042 }
+};
